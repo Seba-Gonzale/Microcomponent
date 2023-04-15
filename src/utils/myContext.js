@@ -46,22 +46,43 @@ export default function myContext(_useState, _propertyNames) {
     }
   }
 
-  function set(_value) {
-    let functionSet = new Set();
+  function set(_values) {
+    let aux_functionSet = new Set();
 
-    Object.keys(_value).forEach((key) => {
+    Object.keys(_values).forEach((key) => {
       if (key in list_get) {
-        list_get[key] = _value[key];
+        list_get[key] = _values[key];
       } else {
-        list_get = { ...list_get, [key]: _value[key] };
+        list_get = { ...list_get, [key]: _values[key] };
       }
 
       if (key in list_set) {
-        functionSet = [...functionSet, ...list_set[key]];
+        aux_functionSet = [...aux_functionSet, ...list_set[key]];
       }
     });
-    functionSet = [...functionSet, ...list_set.ALLWAYS];
-    [...functionSet].forEach((f) => f({ ...list_get }));
+    aux_functionSet = [...aux_functionSet, ...list_set.ALLWAYS];
+    [...aux_functionSet].forEach((f) => f({ ...list_get }));
+  }
+  function getAndSetOfAProperty(_propertyName) {
+    const propertyName = _propertyName;
+    function getAndSet(_newValue) {
+      if (_newValue === undefined) return list_get[propertyName];
+
+      let aux_functionSet = new Set();
+
+      if (propertyName in list_get) {
+        list_get[propertyName] = _newValue;
+      } else {
+        list_get = { ...list_get, [propertyName]: _newValue };
+      }
+
+      if (propertyName in list_set) {
+        aux_functionSet = [...aux_functionSet, ...list_set[propertyName]];
+      }
+
+      aux_functionSet = [...aux_functionSet, ...list_set.ALLWAYS];
+      [...aux_functionSet].forEach((f) => f({ ...list_get }));
+    }
   }
 
   /*  Inicio de la ejecucion del codigo */
