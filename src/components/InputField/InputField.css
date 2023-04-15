@@ -1,0 +1,28 @@
+.field {
+  margin: 1.5rem 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.field label {
+  font-size: 18px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.field input {
+  width: 100%;
+  background-color: #fff;
+  border: none;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06);
+  padding: 30px 20px;
+  font-size: 1rem;
+}
+.field input:focus {
+  border: 1px solid #6278f7;
+}
+
+.field-color input {
+  height: 3rem;
+  padding: 10px;
+}

@@ -1,0 +1,32 @@
+.mi-org {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mi-org__title {
+  color: #6278f7;
+  font-family: "Prata", serif;
+  font-size: 40px;
+  line-height: 72px;
+  padding-bottom: 19px;
+  border-bottom: 4px solid #6278f7;
+}
+
+.mi-org img {
+  position: absolute;
+  right: 10%;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .mi-org__title {
+    font-size: 2rem;
+  }
+  .mi-org img {
+    position: static;
+  }
+}

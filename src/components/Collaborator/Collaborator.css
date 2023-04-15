@@ -1,0 +1,73 @@
+.collaborator {
+  position: relative;
+  width: 262px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+
+.collaborator__delete {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  background-color: white;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.collaborator:hover .collaborator__delete {
+  visibility: visible;
+  opacity: 1;
+}
+.collaborator__delete:hover {
+  background-color: black;
+  color: white;
+}
+
+.collaborator__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+/* .collaborator__card figcaption {
+  height: 100%;
+} */
+
+.collaborator__img {
+  width: 120px;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.collaborator__name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #6278f7;
+  margin: 1rem 0 0 0;
+}
+
+.collaborator__specialty {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #212121;
+  margin: 0.625rem 0 1rem 0;
+}
+
+.collaborator__heart {
+  cursor: pointer;
+}

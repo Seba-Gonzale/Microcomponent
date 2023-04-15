@@ -1,0 +1,44 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  background-image: url("../../../public/img/Footer.png");
+  background-size: cover;
+  background-position: 50% 50%;
+  padding: 75px;
+}
+
+.footer > * {
+  flex: 0 0 33%;
+}
+
+.footer__networks {
+  display: flex;
+  gap: 2.17rem;
+}
+
+.footer__logo {
+  text-align: center;
+}
+
+.footer__logo img {
+  width: 10rem;
+}
+
+.footer__developer {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+}
+
+@media screen and (min-width: 0px) and (max-width: 767px) {
+  .footer {
+    flex-direction: column;
+  }
+}

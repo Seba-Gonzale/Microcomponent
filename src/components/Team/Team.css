@@ -1,0 +1,26 @@
+.team {
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  font-size: 2rem;
+  position: relative;
+}
+
+.team__color {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.team__title {
+  color: #212121;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.team__collaborators {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 20px;
+}
