@@ -91,8 +91,16 @@ const initialCollaborators = [
 ];
 
 function App() {
-  myContext({ backgroundColor: "red" });
-  const { sebi } = myContext({ sebi: "sebi" });
+  const { get } = myContext(
+    {
+      backgroundColor: "red",
+      "": "loco",
+    },
+    true
+  );
+  console.log(get[""]);
+  // const all = myContext(useState);
+  // console.log(all);
   // sebi("Sebi");
 
   // const $1 = myContext({ perro: "perro", gato: "" });

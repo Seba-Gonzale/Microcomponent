@@ -4,8 +4,10 @@ import "./Collaborator.css";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 export default function Collaborator(p_) {
-  const c_ = myContext(useState, ["backgroundColor", "sebi"]);
-  console.log(c_.sebi);
+  const c_ = myContext(useState, ["backgroundColor", "sebi", "perro", "gato"]);
+
+  console.log(c_);
+
   //
   const styles = {
     // backgroundImage: `linear-gradient(${p_.primaryColor} 92px, white 92px)`,
@@ -53,7 +55,9 @@ export default function Collaborator(p_) {
             />
           )}
         </figcaption>
-        <p onClick={() => c_.sebi("Sos un Crack!")}>{c_.sebi()}</p>
+        {c_.sebi() ?? (
+          <p onClick={() => c_.sebi("Sos un Crack!")}>{c_.sebi()}</p>
+        )}
       </figure>
     </div>
   );
