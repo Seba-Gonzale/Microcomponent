@@ -156,8 +156,14 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
     } else if (
       _propertyNames instanceof Object &&
       Object.keys(_propertyNames).length !== 0
-    )
+    ) {
+      if ("_$_" in _propertyNames) {
+        const aux_object = getValidProperties(_propertyNames._$_);
+        if (aux_object !== undefined)
+          return { ..._propertyNames, ...aux_object };
+      }
       return _propertyNames;
+    }
   }
 
   /*  Inicio de la ejecucion del codigo */

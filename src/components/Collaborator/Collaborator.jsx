@@ -4,14 +4,16 @@ import "./Collaborator.css";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 export default function Collaborator(p_) {
-  const c_ = myContext(useState, ["backgroundColor", "sebi", "perro", "gato"]);
-
-  console.log(c_);
+  const { backgroundColor, perro, gato } = myContext(useState, {
+    backgroundColor: "red",
+    _$_: ["perro", "gato"],
+  });
+  console.log("Hola somos " + perro() + " y " + gato());
 
   //
   const styles = {
     // backgroundImage: `linear-gradient(${p_.primaryColor} 92px, white 92px)`,
-    backgroundImage: `linear-gradient(${c_.backgroundColor()} 92px, white 92px)`,
+    backgroundImage: `linear-gradient(${backgroundColor()} 92px, white 92px)`,
   };
 
   function ButtonDelete() {
@@ -21,7 +23,7 @@ export default function Collaborator(p_) {
         type="button"
         title="Delete"
         // onClick={() => p_.delCollaborator(p_.id)}
-        onClick={() => c_.backgroundColor("yellow")}
+        onClick={() => backgroundColor("yellow")}
       >
         X
       </button>
@@ -55,9 +57,6 @@ export default function Collaborator(p_) {
             />
           )}
         </figcaption>
-        {c_.sebi() ?? (
-          <p onClick={() => c_.sebi("Sos un Crack!")}>{c_.sebi()}</p>
-        )}
       </figure>
     </div>
   );

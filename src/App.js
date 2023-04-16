@@ -91,14 +91,10 @@ const initialCollaborators = [
 ];
 
 function App() {
-  const { get } = myContext(
-    {
-      backgroundColor: "red",
-      "": "loco",
-    },
-    true
-  );
-  console.log(get[""]);
+  myContext({
+    perro: "pitbull",
+    gato: "siames",
+  });
   // const all = myContext(useState);
   // console.log(all);
   // sebi("Sebi");
