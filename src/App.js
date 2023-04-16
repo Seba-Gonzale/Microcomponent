@@ -3,9 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import Header from "./components/Header/Header.jsx";
 import Form from "./components/Form/Form.jsx";
 import MiOrg from "./components/MiOrg/MiOrg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Team from "./components/Team/Team";
 import Footer from "./components/Footer";
+import myContext from "./utils/myContext";
 
 // Lista de equipos
 const initialTeams = [
@@ -90,6 +91,57 @@ const initialCollaborators = [
 ];
 
 function App() {
+  myContext({ backgroundColor: "red" });
+  const { sebi } = myContext({ sebi: "sebi" });
+  // sebi("Sebi");
+
+  // const $1 = myContext({ perro: "perro", gato: "" });
+  // const $2 = myContext(["perro", "gato", "tucan"]);
+  // const $3 = myContext({});
+  // const $4 = myContext([]);
+  // const $5 = myContext(useState);
+  // const $6 = myContext(useState, []);
+  // const $7 = myContext(useState, {});
+  // const $8 = myContext(useState, { $8: "$8", $88: "$88" });
+  // const xxx = myContext(useState, { $8: "$5", $88: "$55" });
+  // const $9 = myContext(useState, ["$9", "$99"]);
+  // const $10 = myContext();
+
+  // console.log($1);
+  // console.log($2);
+  // console.log($3);
+  // console.log($4);
+  // console.log($5);
+  // console.log($6);
+  // console.log($7);
+  // console.log($8);
+  // console.log($9);
+  // console.log($10);
+  // // console.log(ic());
+
+  // console.log($1.perro());
+  // console.log($2.tucan());
+  // console.log($3.get.gato);
+  // console.log($4.get.tucan);
+  // console.log($5.get.perro);
+  // console.log($6.get.$8);
+  // console.log($7.get.$88);
+  // console.log($8.$8());
+  // console.log($9.$9());
+  // console.log($10.get);
+
+  // useEffect(() => {
+  //   $10.set();
+  //   // $2.tucan();
+  //   // $3.get.gato;
+  //   // $4()
+  //   // $5()
+  //   // $6()
+  //   // $7()
+  //   // $8()
+  //   // $9()
+  //   // $10()
+  // }, []);
   //
   const [showForm, setShowForm] = useState(false);
   const [collaborators, setCollaborators] = useState(initialCollaborators);
