@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-// Aquí se guardan todos los datos inicializados y seteadas
+// Aquí se guardan todos los datos inicializados y seteados
 let g_dataList = {};
-// Aquí se guardan las funciones retornadas por el useState() con su correspondiente propiedad
+// Aquí se guardan las funciones retornadas por el useState() con el nombre de propiedad que recibe myContext
 // para renderizar solo los componentes que esten consumiendo el valor de dicha propiedad
 let g_functionList = { __ALLWAYS__: new Set() };
 // Las funciones getAndSet que se guardan en "g_getAndSet_list" facilitan la manipulacion de los valores
@@ -10,7 +10,6 @@ let g_functionList = { __ALLWAYS__: new Set() };
 let g_getAndSet_list = {};
 
 export default function myContext(_useState, _propertyNames, _viewMode) {
-  // function myContext(_useState, _propertyNames) {
   //
   function initializeValues(_validProperties, _dataList) {
     //
@@ -166,7 +165,7 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
     }
   }
 
-  /*  Inicio de la ejecucion del codigo */
+  // * Inicio de la ejecucion del codigo *****************/
 
   if (_useState === undefined) return { ...g_getAndSet_list };
   if (typeof _useState === "boolean" && _useState)
@@ -219,15 +218,3 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
     }
   }
 }
-
-// const [get, set] = myContext({ team: ["perro", "gato"] });
-// console.log(["hola"].map((v) => false));
-// const array = ["", undefined, null];
-
-// const objeto = array.reduce((acumulador, elemento) => {
-//   acumulador[elemento] = "";
-//   return acumulador;
-// }, {});
-
-// console.log(objeto); // { uno: '', dos: '', tres: '' }
-// console.log(undefined instanceof Object);
