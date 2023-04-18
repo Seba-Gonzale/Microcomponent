@@ -30,6 +30,7 @@ import { useState } from "react";
 
 function Componente() {
   const { user } = myContext(useState, { user: "David" });
+  console.log(user());
   return (
     <>
       <h1> Hola soy {user()} </h1>
