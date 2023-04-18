@@ -25,27 +25,29 @@ Analicemos la sintaxis de `myContext()` que más vas a usar, que son 2 parametro
 
 Ahora crea un archivo Componente.jsx con el siguiente código y agregalo dentro del componente App:
   ```
-  import myContext from "./myContext.js";
-  import { useState } from "react";
-  
-  function Componente () {
-    const { user } = myContext(useState, {user: "David"});
-    return (
-      <>
-        <h1> Hola soy {user()} <h1/>
-        <Buton />
-      </>
-    )
-  }
-  
-  function Button () {
-    const { user } = myContext({ user: "German" });
-    return  <button type="button" onClick={() => user("Javier")}>
-              Cambiar usuario
-            </button>;
-}            
-  
-  export default Componente;
+import myContext from "./myContext.js";
+import { useState } from "react";
+
+function Componente() {
+  const { user } = myContext(useState, { user: "David" });
+  return (
+    <>
+      <h1> Hola soy {user()} </h1>
+      <Button />
+    </>
+  );
+}
+
+function Button() {
+  const { user } = myContext({ user: "German" });
+  return (
+    <button type="button" onClick={() => user("Javier")}>
+      Cambiar usuario
+    </button>
+  );
+}
+
+export default Componente;
   ```
 ### Empecemos con el componente "Componente" y analicemos la llamada a `myContext() `de derecha a izquierda.
 
