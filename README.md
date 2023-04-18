@@ -110,8 +110,6 @@ Al presionar el componente "Button" éste llama a la funcion **user("Javier")**,
 
 `const todos = myContext();`: Retorna un Objeto de funciones con "todos" los identificadores de la lista de `myContext()`.
 
-`const todos = myContext(useState);`: Retorna un Objeto de funciones con "todos" los identificadores de la lista de `myContext()` y pide que el componente que llama a `myContext()` se renderize por los cambios que se realicen a cualquier valor existente en la lista de `myContext()` hasta ese momento (ésta opcion no es eficiente y falta añadir la funcion de que se renderice tambien con las nuevas inicializaciones que son las que siguen en el arbol por debajo del componente y ésto causaría mas ineficiencia). Y ustedes pensaran... ¿Entonces por qué está ésta opción? y yo les diré... "pueees... pa que presten atención chavales".
-
 `const { name } = myContext({ name: valor_inicial });`: Éste tambien lo vimos en el ejemplo. Si el idenficador "name" __No__ está en la lista de `myContext()` lo crea, lo inicializa y retorna la funcion para manipular dicho valor; si el identificador "name" __Si__ está en la lista, solo retorna la función para manipular el valor de ese identficador.
 
 `const { name } = myContext([ name ]);`: Lo mismo que la opción anterior pero aquí si el identificador "name" __No__ se encuentra en la lista de `myContext()` éste lo inicializa automaticamente con *undefined*.
