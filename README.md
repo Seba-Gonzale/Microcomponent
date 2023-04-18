@@ -2,7 +2,7 @@
 
 # ¿Qué es **myContext()**?
 
-Es un archivo de javascript que tiene la funcionalidad de pasar valores entre componentes de React al igual que el hook useContext() y evitar los renderizados inecesarios como el hook useMemo(), pero en una sola linea de código. Es simple, legible, facil de entender y de usar, no usa useContext() ni props ni useMemo(), y puede pasar el valor entre componentes y funciones.
+Es un [#archivo](https://drive.google.com/file/d/1Q4gLstjxg1f1Uv0fY1uvmRV_gZ7ma9rQ/view?usp=share_link) de javascript que tiene la funcionalidad de pasar valores entre componentes de React al igual que el hook useContext() y evitar los renderizados inecesarios como el hook useMemo(), pero en una sola linea de código. Es simple, legible, facil de entender y de usar, no usa useContext() ni props ni useMemo(), y puede pasar el valor entre componentes y funciones.
 
 **Aquí el ejemplo mas sencillo de como pasar un valor a otros componentes o funciones en un proyecto con React JS**:
 ```
@@ -15,9 +15,9 @@ Solo con ésto ya pusiste un valor que puede ser consumible por componentes y fu
 *El poder de `myContext()` radica en su simplicidad, eficiencia, efectividad y facil comprensión*.
 
 ## Ejemplo práctico
-`myContext()` puede recibir "0", "1", "2" ó "3" parametros.
+Descarga el archivo [myContext.js](https://drive.google.com/file/d/1Q4gLstjxg1f1Uv0fY1uvmRV_gZ7ma9rQ/view?usp=share_link) y juega con el mientras lees ésta guia para entenderlo mejor.
 
-Descarga el archivo [myContext.js](https://drive.google.com/file/d/1NZx8XxNnTa8iLCU1wWxOcJzD2kTDMye8/view?usp=sharing) y juega con el mientras lees ésta guia para entenderlo mejor.
+`myContext()` puede recibir "0", "1", "2" ó "3" parametros.
 
 Analicemos la sintaxis de `myContext()` que más vas a usar, que son 2 parametros y el retorno de la función:
 
@@ -25,27 +25,47 @@ Analicemos la sintaxis de `myContext()` que más vas a usar, que son 2 parametro
 
 Ahora crea un archivo Componente.jsx con el siguiente código y agregalo dentro del componente App:
   ```
-  import myContext from "./myContext.js";
-  import { useState } from "react";
+import myContext from "./myContext.js";
+import { useState } from "react";
+
+function Componente() {
+  const { user } = myContext(useState, { user: "David" });
+  console.log(user());
+  return (
+    <>
+      <h1> Hola soy {user()} </h1>
+      <Button />
+    </>
+  );
+}
+
+function Button() {
+  const { user } = myContext({ user: "German" });
+  return (
+    <button type="button" onClick={() => user("Javier")}>
+      Cambiar usuario
+    </button>
+  );
+}
+
+export default Componente;
+  ```
   
-  function Componente () {
-    const { user } = myContext(useState, {user: "David"});
-    return (
-      <>
-        <h1> Hola soy {user()} <h1/>
-        <Buton />
-      </>
-    )
-  }
+  **Así quedaría en el componente App:**
   
-  function Button () {
-    const { user } = myContext({ user: "German" });
-    return  <button type="button" onClick={() => user("Javier")}>
-              Cambiar usuario
-            </button>;
-}            
-  
-  export default Componente;
+  ```
+import "./App.css";
+import Componente from "./Componente";
+
+function App() {
+  return (
+    <div className="App">
+      <Componente />
+    </div>
+  );
+}
+
+export default App;
   ```
 ### Empecemos con el componente "Componente" y analicemos la llamada a `myContext() `de derecha a izquierda.
 
@@ -90,8 +110,6 @@ Al presionar el componente "Button" éste llama a la funcion **user("Javier")**,
 
 `const todos = myContext();`: Retorna un Objeto de funciones con "todos" los identificadores de la lista de `myContext()`.
 
-`const todos = myContext(useState);`: Retorna un Objeto de funciones con "todos" los identificadores de la lista de `myContext()` y pide que el componente que llama a `myContext()` se renderize por los cambios que se realicen a cualquier valor existente en la lista de `myContext()` hasta ese momento (ésta opcion no es eficiente y falta añadir la funcion de que se renderice tambien con las nuevas inicializaciones que son las que siguen en el arbol por debajo del componente y ésto causaría mas ineficiencia). Y ustedes pensaran... ¿Entonces por qué está ésta opción? y yo les diré... "pueees... pa que presten atención chavales".
-
 `const { name } = myContext({ name: valor_inicial });`: Éste tambien lo vimos en el ejemplo. Si el idenficador "name" __No__ está en la lista de `myContext()` lo crea, lo inicializa y retorna la funcion para manipular dicho valor; si el identificador "name" __Si__ está en la lista, solo retorna la función para manipular el valor de ese identficador.
 
 `const { name } = myContext([ name ]);`: Lo mismo que la opción anterior pero aquí si el identificador "name" __No__ se encuentra en la lista de `myContext()` éste lo inicializa automaticamente con *undefined*.
@@ -102,7 +120,7 @@ Al presionar el componente "Button" éste llama a la funcion **user("Javier")**,
 
 `get` contiene todos los valores que se encuentran en la lista de `myContext()`, por ejemplo para `const { name } = myContext(useState, { name: valor_inicial }, true);` **myContext()** retorna `{ get: { name: valor_inicial, etc... }, set: f(x) }`.
 
-`set` recibe un objeto con los idenficadores a cambiarles el valor y el nuevo valor, por ejemplo: `set({ name: nuevo_valor, etc... })` al terminar la funcion retorna un Objeto con los nuevos valores asi `{ name: nuevo_valor, etc... }`.
+`set` es una función que recibe como parámetro un objeto con los idenficadores a los que se les va a cambiar el valor y los nuevos valores de dichos identificadores, por ejemplo: `set({ name: nuevo_valor, etc... })` al terminar la funcion retorna un Objeto con los nuevos valores asi `{ name: nuevo_valor, etc... }`.
 
 Fin.
 
