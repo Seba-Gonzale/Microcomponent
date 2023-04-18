@@ -32,7 +32,7 @@ export default function Component_1() {
     <div className="Component_1">
       <h1 className="Component_1__title">myContext</h1>
       <p className="Component_1__description">
-        Sin <b>useContext()</b> ni <b>Props</b>
+        Sin <b>useContext()</b> ni <b>Props</b> ni <b>useMemo()</b>
       </p>
       <p className="Component_1__description">
         más rápido más sencillo más legible más chevere
