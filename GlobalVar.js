@@ -2,14 +2,14 @@ import { useState } from "react";
 
 // Aquí se guardan todos los datos inicializados y seteados
 let g_dataList = {};
-// Aquí se guardan las funciones retornadas por el useState() con el nombre de propiedad que recibe myContext
+// Aquí se guardan las funciones retornadas por el useState() con el nombre de propiedad que recibe useGlobalVar
 // para renderizar solo los componentes que esten consumiendo el valor de dicha propiedad
 let g_functionList = {};
 // Las funciones getAndSet que se guardan en "g_getAndSet_list" facilitan la manipulacion de los valores
 // de las propiedades de "g_dataList" en el codigo donde retornan dichas funciones
 let g_getAndSet_list = {};
 
-export default function myContext(_useState, _propertyNames, _viewMode) {
+export default function useGlobalVar(_useState, _propertyNames, _viewMode) {
   //
   function initializeValues(_validProperties, _dataList) {
     //
