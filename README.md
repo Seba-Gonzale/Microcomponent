@@ -50,6 +50,23 @@ function Button() {
 
 export default Componente;
   ```
+  
+  **Así quedaría en el componente App:**
+  
+  ```
+import "./App.css";
+import Componente from "./Componente";
+
+function App() {
+  return (
+    <div className="App">
+      <Componente />
+    </div>
+  );
+}
+
+export default App;
+  ```
 ### Empecemos con el componente "Componente" y analicemos la llamada a `myContext() `de derecha a izquierda.
 
 `{ user: "David" }`: es el argumento que agrega un valor con el identificador **user** a la lista de `myContext()`para que sea consumible por otros componentes y funciones desde cualquier parte de la aplicación.
