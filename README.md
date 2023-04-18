@@ -1,39 +1,40 @@
 # `myContext()`
+# What is myContext()?
 
-# ¿Qué es **myContext()**?
+It is a JavaScript [#file](https://drive.google.com/file/d/1u4Xhx9_2EGtb5j_yR-AVxNr3Tn2txKot/view) that has the functionality of passing values between React components like the useContext() hook and avoiding unnecessary renderings like the useMemo() hook, but in a single line of code. It is simple, readable, easy to understand and use, it does not use useContext() or props or useMemo(), and can pass values between components and functions.
 
-Es un [#archivo](https://drive.google.com/file/d/1u4Xhx9_2EGtb5j_yR-AVxNr3Tn2txKot/view?usp=share_link) de javascript que tiene la funcionalidad de pasar valores entre componentes de React al igual que el hook useContext() y evitar los renderizados inecesarios como el hook useMemo(), pero en una sola linea de código. Es simple, legible, facil de entender y de usar, no usa useContext() ni props ni useMemo(), y puede pasar el valor entre componentes y funciones.
-
-**Aquí el ejemplo mas sencillo de como pasar un valor a otros componentes o funciones en un proyecto con React JS**:
+**Here's the simplest example of how to pass a value to other components or functions in a React JS project:**
 ```
 import myContext from "./myContext.js";
 
 myContext({user: "David"});
 ```
-Solo con ésto ya pusiste un valor que puede ser consumible por componentes y funciones, sin necesidad de crear una variable con createContext(), ni crear un componente Provider, ni recibir un { children } para pasarle los valores, etc, etc, etc.. bien!, sigamos.
 
-*El poder de `myContext()` radica en su simplicidad, eficiencia, efectividad y facil comprensión*.
+With just this, you have already set a value that can be consumed by components and functions, without the need to create a variable with createContext(), create a Provider component, or receive a { children } to pass the values to it, etc, etc, etc.. well, let's continue.
 
-## Ejemplo práctico
-Descarga el archivo [myContext.js](https://drive.google.com/file/d/1u4Xhx9_2EGtb5j_yR-AVxNr3Tn2txKot/view?usp=share_link) y juega con el mientras lees ésta guia para entenderlo mejor.
+*The power of **myContext()** lies in its simplicity, efficiency, effectiveness, and ease of understanding.*
 
-`myContext()` puede recibir "0", "1", "2" ó "3" parametros.
+## Practical example
 
-Analicemos la sintaxis de `myContext()` que más vas a usar, que son 2 parametros y el retorno de la función:
+Download the file [myContext.js](https://drive.google.com/file/d/1u4Xhx9_2EGtb5j_yR-AVxNr3Tn2txKot/view) and play with it while you read this guide to better understand it.
+
+**myContext()** can receive "0", "1", "2", or "3" parameters.
+
+Let's analyze the syntax of **myContext()** that you will use the most, which are 2 parameters and the function's return:
 
 `const { user } = myContext(useState, {user: "David"});`
 
-Ahora crea un archivo Componente.jsx con el siguiente código y agregalo dentro del componente App:
-  ```
+Now create a Component.jsx file with the following code and add it inside the App component:
+```
 import myContext from "./myContext.js";
 import { useState } from "react";
 
-function Componente() {
+function Component() {
   const { user } = myContext(useState, { user: "David" });
   console.log(user());
   return (
     <>
-      <h1> Hola soy {user()} </h1>
+      <h1> Hello, I'm {user()} </h1>
       <Button />
     </>
   );
@@ -43,87 +44,82 @@ function Button() {
   const { user } = myContext({ user: "German" });
   return (
     <button type="button" onClick={() => user("Javier")}>
-      Cambiar usuario
+      Change user
     </button>
   );
 }
 
-export default Componente;
-  ```
-  
-  **Así quedaría en el componente App:**
-  
-  ```
+export default Component;
+```
+This is how it would look in the App component:
+```
 import "./App.css";
-import Componente from "./Componente";
+import Component from "./Component";
 
 function App() {
   return (
     <div className="App">
-      <Componente />
+      <Component />
     </div>
   );
 }
 
 export default App;
-  ```
-### Empecemos con el componente "Componente" y analicemos la llamada a `myContext() `de derecha a izquierda.
+```
+### Let's start with the "Component" component and analyze the **myContext()** call from right to left.
 
-`{ user: "David" }`: es el argumento que agrega un valor con el identificador **user** a la lista de `myContext()`para que sea consumible por otros componentes y funciones desde cualquier parte de la aplicación.
+`{ user: "David" }`: is the argument that adds a value with the identifier user to the list of **myContext()** so that it can be consumed by other components and functions from anywhere in the application.
 
-Puedes pasar un objeto con muchos valores por ejemplo: `{ user: "David", cumpleanios: "22/11/2009", mascota: "fatiga" }`.
+You can pass an object with many values for example: ___{ user: "David", birthday: "22/11/2009", pet: "fatigue" }___.
 
-Puedes pasar un Array con los nombres de los identificadores por ejemplo: `["user", "cumpleanios", "mascota"]`, éstos se inicializaran con `undefined` como si ubieces pasado el siguiente objeto: *{ user: undefined, cumpleanios: undefined, mascota: undefined }*
+You can also pass a mix of Object with Array, for example: ___{ user: "David", `_$_`:[ "birthday", "pet" ] }___, with the key name `_$_` for the Array of identifier names.
 
-Tambien puedes pasarle un mix de Objeto con Array por ej: `{ user: "David", _$_:[ "cumpleanios", "mascota" ] }`, con el nombre clave `_$_` para el Array de nombres de identificadores.
+**Great! Next argument:**
 
-***Bien!, siguiente argumento:***
+useState: myContext() makes use of a single hook, useState, and WITHOUT PARENTHESES! The useState only tells myContext(), hey! Let me know when "user" changes its value so I can re-render "this" component. And that's all with useState, okay! Let's move on.
 
-`useState`: **myContext()** hace uso de un único hook, el **useState** y __¡¡ SIN PARENTESIS !!__, el useState lo único que hace es decirle a **myContext()**, oye! quiero que me avises cuando **"user"** cambia de valor así vuelvo a renderizar **"éste"** componente . Y eso es todo con useState, bien! sigamos.
+### Values returned by myContext():
 
-**Valores que retorna `myContext()`:**
+`{ user } =`: myContext() has 2 types of return, we will talk about the main one which is the default and is the one you will mostly use, it is an Object with functions and depends on the values passed to myContext(). For example, if the Object __{ user: "David", birthday: "11/22/2009", pet: "Fatigue" }__ was passed, myContext() will return ___{ user: f(x), birthday: f(x), pet: f(x)}___.
 
-`{ user } =`: **myContext()** tiene 2 tipos de retorno, hablaremos del principal que es el que está por defecto y es el que mayormente vas a usar, es un Objeto con funciones y depende de los valores que se le pase a **myContext()**. Por ejemplo si se le pasó el Objeto *{ user: "David", cumpleanios: "22/11/2009", mascota: "fatiga" }*, **myContext()** retornará `{ user: f(x), cumpleanios: f(x), mascota: f(x)}`.
+### What do the functions returned by myContext() do?
 
-**¿Qué hacen las funciones que retorna `myContext()`?**
+Taking the previous example __{ user: f(x), birthday: f(x), pet: f(x)}__, we will use one of the functions returned by myContext(), this will be __user__, __user__ is a function, when calling the function __user()__ without arguments, it returns the value of "David", which is the value with which we initialized the identifier when we passed it to __myContext()__; when I call the function __user("Javier")__, with arguments, I am changing the value of user in the list of __myContext()__, and if I call the function __user()__ without parameters again, it will return "Javier" instead of "David".
 
-Tomando el ejemplo anterior `{ user: f(x), cumpleanios: f(x), mascota: f(x)}`, usaremos una de las funciones que devolvio **myContext()**, ésta será **user**, **user** es una función, al llamar a la función **user()** sin argumentos ésta retorna el valor de "David", que es el valor con el que inicializamos el identificador cuando lo pasamos a **myContext()**; cuando llamo a la función **user("Javier")**, con argumentos, estoy cambiando el valor de **user** en la lista de `myContext()`, y si vuelvo a llamar a la funcion **user()** sin parametros, ésta me devolvera "Javier" y no "David".
+### Let's continue with the "Button" component and analyze the call to myContext() from right to left:
 
+`{ user: "German" }`: Here we pass a value to initialize "user" again, but since it was already initialized by the "Component" component and is already in the __myContext()__ list, it will not be initialized again and __`user()`__ will continue to return "David"; components that are consuming user will also not be re-rendered because the value was not changed with `user('new value')`.
 
-### Sigamos con el componente "Button" y analicemos la llamada a `myContext()` de derecha a izquierda:
+Note that in this case, I did not pass the "useState" as an argument because I am not interested in having the "Button" component re-render when the value of user changes, (scope clarification: in this case "Button" will be re-rendered because it is a child of "Component", and when "Component" is re-rendered, "Button" is also re-rendered).
 
-`{ user: "German" }`: Aquí nuevamente le pasamos un valor a inicializar en "user", pero como éste ya fue inicializado por el componente "Componente" y ya se encuentra en la lista de `myContext()` no volvera a ser inicializado y **user()** seguira retornando "David"; tampoco serán renderizados los componentes que estén consumiendo **user** porque el valor no fue cambiado con **user('nuevo valor')**.
+### Return of myContext():
 
-*Notece* que aquí no paso el "*useState*" como argumento porque no me interesa que el componente "Button" se vuelva a renderizar cuando cambie el valor de **user**, (*aclaración de alcance*: en éste caso "Button" si se volvera a renderizar por que es hijo de "Componente", y al volverse a renderizar "Componente" tambien se vuelve a renderizar "Button").
+`{ user } =`: Just like in the "Component" example, __myContext()__ returns an object of functions, and guess what happens if I call the __user()__ function without arguments?... that's right!, it returns "David".
 
-**Retorno de `myContext():`**
+### What happens to the "Button" component when it is pressed?
 
-`{ user } =`: Al igual que en "Componente" `myContext()` retorna un Objeto de funciones, y adivina que ocurre si llamo a la funcion **user()** sin argumentos?... exacto!, éste me retorna "David".
+When the "Button" component is pressed, it calls the function __user("Javier")__, __myContext()__ changes the value of user in its list, and then renders all the components that passed through "useState" as part of the arguments in the call to __myContext()__. Voila! Data changed and components rendered with the new value.
 
-**¿Qué pasa con el componente "Button" cuando es presionado?**
+## Parameters and Syntax
 
-Al presionar el componente "Button" éste llama a la funcion **user("Javier")**, `myContext()` cambia el valor de **user** en su lista y renderiza todos los componentes que pasaron "*useState*" como parte de los argumentos en la llamada a `myContext()` y voila! datos cambiados y componentes renderizados con el nuevo valor.
+`const { name } = myContext(useState, { name: initial_value });`: This is the example we saw.
 
-## Parametros y Sintaxis
+`const all = myContext();`: Returns an object of functions with "all" the identifiers in the __myContext()__ list.
 
-`const { name } = myContext(useState, { name: valor_inicial });`: Éste es el de el ejemplo.
+`const { name } = myContext({ name: initial_value });`: This is also seen in the example. If the identifier "name" is not in the __myContext()__ list, it creates and initializes it, then returns the function to manipulate that value. If the identifier "name" is in the list, it just returns the function to manipulate the value of that identifier.
 
-`const todos = myContext();`: Retorna un Objeto de funciones con "todos" los identificadores de la lista de `myContext()`.
+`const { name } = myContext([ name ]);`: The same as the previous option, but if the identifier "name" is not in the __myContext()__ list, it initializes it automatically with undefined.
 
-`const { name } = myContext({ name: valor_inicial });`: Éste tambien lo vimos en el ejemplo. Si el idenficador "name" __No__ está en la lista de `myContext()` lo crea, lo inicializa y retorna la funcion para manipular dicho valor; si el identificador "name" __Si__ está en la lista, solo retorna la función para manipular el valor de ese identficador.
+### All of the above can also take an additional argument: `true`
 
-`const { name } = myContext([ name ]);`: Lo mismo que la opción anterior pero aquí si el identificador "name" __No__ se encuentra en la lista de `myContext()` éste lo inicializa automaticamente con *undefined*.
+`true` makes __myContext()__ return not an object of functions, but an object with properties "get" and "set" like so: `{ get, set }`.
 
-### A todas las anteriores se le puede pasar un argumento más: `true`
+`get` contains all the values found in the __myContext()__ list. For example, for __const { name } = myContext(useState, { name: initial_value }, __`true`__);__, __myContext()__ returns ___{ get: { name: initial_value, etc... }, set: f(x) }___.
 
-`true` hace que `myContext()` retorne no un Objeto de funciones sinó un Objeto con las propiedades "get" y "set" así `{ get, set}`.
+`set` is a function that receives an object as a parameter with the identifiers whose values are going to be changed, and the new values for those identifiers. For example: __set({ name: new_value, etc... })__. After the function finishes, it returns an object with the new values like so: ___{ name: new_value, etc... }___.
 
-`get` contiene todos los valores que se encuentran en la lista de `myContext()`, por ejemplo para `const { name } = myContext(useState, { name: valor_inicial }, true);` **myContext()** retorna `{ get: { name: valor_inicial, etc... }, set: f(x) }`.
+That's it.
 
-`set` es una función que recibe como parámetro un objeto con los idenficadores a los que se les va a cambiar el valor y los nuevos valores de dichos identificadores, por ejemplo: `set({ name: nuevo_valor, etc... })` al terminar la funcion retorna un Objeto con los nuevos valores asi `{ name: nuevo_valor, etc... }`.
+Thank you for reading this far, if this file was useful to you, remember to tell your colleagues and developer friends so they can use it too.
 
-Fin.
-
-Gracias por leer hasta aquí, si te fue útil el archivo recuerda comentarselo a tus colegas y amigos desarrolladores para que lo puedan usar.
-
-Saludos!!!
+Cheers!!!
