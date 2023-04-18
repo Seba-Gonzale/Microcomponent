@@ -4,7 +4,7 @@ import { useState } from "react";
 let g_dataList = {};
 // Aquí se guardan las funciones retornadas por el useState() con el nombre de propiedad que recibe myContext
 // para renderizar solo los componentes que esten consumiendo el valor de dicha propiedad
-let g_functionList = { __ALLWAYS__: new Set() };
+let g_functionList = {};
 // Las funciones getAndSet que se guardan en "g_getAndSet_list" facilitan la manipulacion de los valores
 // de las propiedades de "g_dataList" en el codigo donde retornan dichas funciones
 let g_getAndSet_list = {};
@@ -46,13 +46,6 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
     }, _functionList);
   }
 
-  function addToRenderByAnyProperty(_useS, _functionList) {
-    if (!_functionList.__ALLWAYS__.has(_useS.f)) {
-      _functionList.__ALLWAYS__.add(_useS.f);
-    }
-    return _functionList;
-  }
-
   function set(_object) {
     if (
       _object === undefined ||
@@ -85,7 +78,6 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
         }
       }
     });
-    aux_toRender = [...aux_toRender, ...aux_functionList.__ALLWAYS__];
     [...aux_toRender].forEach((f) => f({ ...aux_dataList }));
 
     g_dataList = aux_dataList;
@@ -129,7 +121,6 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
           aux_toRender = [...aux_toRender, ...aux_functionList[propertyName]];
         }
       }
-      aux_toRender = [...aux_toRender, ...aux_functionList.__ALLWAYS__];
       [...aux_toRender].forEach((f) => f({ ...aux_dataList }));
 
       g_dataList = aux_dataList;
@@ -189,17 +180,12 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
         ? { get: { ...g_dataList }, set }
         : getAndSet_initialized(validProperties, { ...g_getAndSet_list });
     } else {
-      [useS.v, useS.f] = _useState({ ...g_dataList });
-      g_functionList = addToRenderByAnyProperty(useS, { ...g_functionList });
-      return typeof _propertyNames === "boolean" && _propertyNames
-        ? { get: { ...g_dataList }, set }
-        : { ...g_getAndSet_list };
+      throw new Error("Invalid Object or Array");
     }
     //
   } else {
     //
     const validProperties = getValidProperties(_useState);
-    const useS = {};
 
     if (validProperties) {
       g_dataList = initializeValues(validProperties, { ...g_dataList });
@@ -210,11 +196,7 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
         ? { get: { ...g_dataList }, set }
         : getAndSet_initialized(validProperties, { ...g_getAndSet_list });
     } else {
-      [useS.v, useS.f] = _useState({ ...g_dataList });
-      g_functionList = addToRenderByAnyProperty(useS, { ...g_functionList });
-      return typeof _propertyNames === "boolean" && _propertyNames
-        ? { get: { ...g_dataList }, set }
-        : { ...g_getAndSet_list };
+      throw new Error("Invalid Object or Array");
     }
   }
 }
