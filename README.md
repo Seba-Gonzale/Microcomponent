@@ -15,9 +15,9 @@ Solo con ésto ya pusiste un valor que puede ser consumible por componentes y fu
 *El poder de `myContext()` radica en su simplicidad, eficiencia, efectividad y facil comprensión*.
 
 ## Ejemplo práctico
-`myContext()` puede recibir "0", "1", "2" ó "3" parametros.
-
 Descarga el archivo [myContext.js](https://drive.google.com/file/d/1Q4gLstjxg1f1Uv0fY1uvmRV_gZ7ma9rQ/view?usp=share_link) y juega con el mientras lees ésta guia para entenderlo mejor.
+
+`myContext()` puede recibir "0", "1", "2" ó "3" parametros.
 
 Analicemos la sintaxis de `myContext()` que más vas a usar, que son 2 parametros y el retorno de la función:
 
