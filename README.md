@@ -120,7 +120,7 @@ Al presionar el componente "Button" éste llama a la funcion **user("Javier")**,
 
 `get` contiene todos los valores que se encuentran en la lista de `myContext()`, por ejemplo para `const { name } = myContext(useState, { name: valor_inicial }, true);` **myContext()** retorna `{ get: { name: valor_inicial, etc... }, set: f(x) }`.
 
-`set` recibe un objeto con los idenficadores a cambiarles el valor y el nuevo valor, por ejemplo: `set({ name: nuevo_valor, etc... })` al terminar la funcion retorna un Objeto con los nuevos valores asi `{ name: nuevo_valor, etc... }`.
+`set` es una función que recibe como parámetro un objeto con los idenficadores a los que se les va a cambiar el valor y los nuevos valores de dichos identificadores, por ejemplo: `set({ name: nuevo_valor, etc... })` al terminar la funcion retorna un Objeto con los nuevos valores asi `{ name: nuevo_valor, etc... }`.
 
 Fin.
 
