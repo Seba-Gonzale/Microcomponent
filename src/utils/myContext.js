@@ -196,7 +196,7 @@ export default function myContext(_useState, _propertyNames, _viewMode) {
         ? { get: { ...g_dataList }, set }
         : getAndSet_initialized(validProperties, { ...g_getAndSet_list });
     } else {
-      throw new Error("Invalid Object or Array");
+      throw new Error("invalid useState, Object or Array");
     }
   }
 }
