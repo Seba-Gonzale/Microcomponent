@@ -11,12 +11,10 @@ export default function Component_7() {
     array_bColors.push("bColor" + i);
   }
 
-  // ! ****************AQUÍ ESTA LA MAGIA******************* */
   /**/ const bC = myContext(useState, array_bColors);
   /**/ const { unoParaTodos } = myContext(["unoParaTodos"]);
-  // ? ***************************************************** */
 
-  // Función para cambiar colores de otros componentes y en el que estamos
+  // Function to change component colors
   function changeColor(_color) {
     const selectedComponent = document.querySelector("[data-select]").value;
     bC["bColor" + selectedComponent](_color);

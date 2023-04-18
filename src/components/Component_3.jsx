@@ -4,8 +4,7 @@ import { useState } from "react";
 
 export default function Component_3() {
   //
-  // ! ****************AQUÍ ESTA LA MAGIA******************* */
-  /**/ const { bColor3 } = myContext(useState, ["bColor3"]);
+  const { bColor3 } = myContext(useState, ["bColor3"]);
 
   return (
     <div
