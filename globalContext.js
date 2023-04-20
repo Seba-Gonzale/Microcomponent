@@ -16,6 +16,12 @@ function createNewGlobalContext() {
 
   function useGlobalContext(_useState_function, _newGlobalData, _viewMode) {
     //
+    function integrityOf_getSetValue_list(_dataList, g_getSetValue_list) {
+      Object.keys(g_getSetValue_list).forEach((key) => {
+        if (!(key in _dataList)) delete g_getSetValue_list[key];
+      });
+    }
+    //
     function initializeValues(_validProperties, _dataList) {
       //
       return Object.keys(_validProperties).reduce((acc_dList, key) => {
@@ -26,17 +32,19 @@ function createNewGlobalContext() {
       }, _dataList);
     }
 
-    function initializeNew_getSetValue(_validProperties, _getAndSet_list) {
+    function initializeNew_getSetValue(_validProperties, g_getSetValue_list) {
       //
-      return Object.keys(_validProperties).reduce((acc_getAsetList, key) => {
+      Object.keys(_validProperties).forEach((key) => {
         //
-        if (!(key in acc_getAsetList))
-          acc_getAsetList = {
-            ...acc_getAsetList,
-            [key]: create_getSetValue_function(key),
-          };
-        return acc_getAsetList;
-      }, _getAndSet_list);
+        if (!(key in g_getSetValue_list)) {
+          // Agregamos una nueva propiedad al objeto g_getSetValue_list,
+          // que no se puede modificar ni eliminar, con una funcion como valor
+          Object.defineProperty(g_getSetValue_list, key, {
+            value: create_getSetValue_function(key),
+            enumerable: true,
+          });
+        }
+      });
     }
 
     function addToRenderList(_validProperties, _useFunction, _renderList) {
@@ -62,10 +70,11 @@ function createNewGlobalContext() {
       else if (Object.keys(_object).length === 0)
         return console.log(new Error("The object is empty!"));
 
+      integrityOf_getSetValue_list(g_dataList, g_getSetValue_list);
+
       let aux_toRender = new Set();
       let aux_dataList = { ...g_dataList };
       let aux_renderList = { ...g_renderList };
-      let aux_getAndSet_list = { ...g_getSetValue_list };
 
       Object.keys(_object).forEach((key) => {
         if (key in aux_dataList) {
@@ -77,10 +86,12 @@ function createNewGlobalContext() {
           }
         } else {
           aux_dataList = { ...aux_dataList, [key]: _object[key] };
-          aux_getAndSet_list = {
-            ...aux_getAndSet_list,
-            [key]: create_getSetValue_function(key),
-          };
+          // Agregamos una nueva propiedad al objeto g_getSetValue_list,
+          // que no se puede modificar ni eliminar, con una funcion como valor
+          Object.defineProperty(g_getSetValue_list, key, {
+            value: create_getSetValue_function(key),
+            enumerable: true,
+          });
           if (key in aux_renderList) {
             aux_toRender = [...aux_toRender, ...aux_renderList[key]];
           }
@@ -90,25 +101,15 @@ function createNewGlobalContext() {
 
       g_dataList = aux_dataList;
       g_renderList = aux_renderList;
-      g_getSetValue_list = aux_getAndSet_list;
 
       return { ...g_dataList };
-    }
-
-    function getSetValue_initialized(_validProperties, _getAndSet_list) {
-      return Object.keys(_validProperties).reduce((acc_getAsetList, key) => {
-        acc_getAsetList = {
-          ...acc_getAsetList,
-          [key]: _getAndSet_list[key],
-        };
-        return acc_getAsetList;
-      }, {});
     }
 
     function create_getSetValue_function(_key) {
       const key = _key;
 
       function getSetValue(_newValue) {
+        integrityOf_getSetValue_list(g_dataList, g_getSetValue_list);
         //
         if (_newValue === undefined) return g_dataList[key];
 
@@ -145,7 +146,7 @@ function createNewGlobalContext() {
         // Asignamos a "aux" un objeto con solo los strings no vacíos del arreglo
         const aux = _newGlobalData.reduce((accumulator, element) => {
           if (typeof element === "string" && element !== "")
-            accumulator[element] = undefined;
+            accumulator[element] = () => console.warn("No hay valor");
           return accumulator;
         }, {});
         // Si el objeto "aux" no está vacío, lo returna
@@ -165,8 +166,9 @@ function createNewGlobalContext() {
     }
 
     // * Inicio de la ejecucion del codigo *****************/
+    integrityOf_getSetValue_list(g_dataList, g_getSetValue_list);
 
-    if (_useState_function === undefined) return { ...g_getSetValue_list };
+    if (_useState_function === undefined) return g_getSetValue_list;
     if (typeof _useState_function === "boolean" && _useState_function)
       return { get: { ...g_dataList }, set };
 
@@ -176,16 +178,12 @@ function createNewGlobalContext() {
 
       if (validProperties) {
         g_dataList = initializeValues(validProperties, { ...g_dataList });
-        g_getSetValue_list = initializeNew_getSetValue(validProperties, {
-          ...g_getSetValue_list,
-        });
+        initializeNew_getSetValue(validProperties, g_getSetValue_list);
         const [useValue, useFunction] = _useState_function({ ...g_dataList });
         g_renderList = addToRenderList(validProperties, useFunction, {
           ...g_renderList,
         });
-        return _viewMode
-          ? { get: { ...g_dataList }, set }
-          : getSetValue_initialized(validProperties, { ...g_getSetValue_list });
+        return _viewMode ? { get: { ...g_dataList }, set } : g_getSetValue_list;
       } else {
         throw new Error("Invalid Object or Array");
       }
@@ -196,12 +194,10 @@ function createNewGlobalContext() {
 
       if (validProperties) {
         g_dataList = initializeValues(validProperties, { ...g_dataList });
-        g_getSetValue_list = initializeNew_getSetValue(validProperties, {
-          ...g_getSetValue_list,
-        });
+        initializeNew_getSetValue(validProperties, g_getSetValue_list);
         return typeof _newGlobalData === "boolean" && _newGlobalData
           ? { get: { ...g_dataList }, set }
-          : getSetValue_initialized(validProperties, { ...g_getSetValue_list });
+          : g_getSetValue_list;
       } else {
         throw new Error("invalid useState, Object or Array");
       }
