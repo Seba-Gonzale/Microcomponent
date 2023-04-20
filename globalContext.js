@@ -5,6 +5,7 @@ import React, { useState } from "react";
  * @returns {function} useGlobalContext - función manejadora de datos y estados de componentes de React Js
  * */
 function createNewGlobalContext() {
+  let g_debug = false;
   // Almacena los datos pasados a la función useGlobalContext()
   let g_dataList = {};
 
@@ -88,7 +89,7 @@ function createNewGlobalContext() {
         return console.log(new Error("The object is empty!"));
 
       integrityOf_g_publicDataList({ ...g_dataList }, g_publicDataList);
-      integrityOf_getSetValue_list(g_dataList, g_getSetValue_list);
+      integrityOf_getSetValue_list({ ...g_dataList }, g_getSetValue_list);
 
       let aux_toRender = new Set();
       let aux_dataList = { ...g_dataList };
@@ -136,7 +137,8 @@ function createNewGlobalContext() {
       g_dataList = aux_dataList;
       g_renderList = aux_renderList;
 
-      return { ...g_dataList };
+      if (g_debug) console.log(g_publicDataList);
+      return g_publicDataList;
     }
 
     function create_getSetValue_function(_key) {
@@ -144,9 +146,9 @@ function createNewGlobalContext() {
 
       function getSetValue(_newValue) {
         integrityOf_g_publicDataList({ ...g_dataList }, g_publicDataList);
-        integrityOf_getSetValue_list(g_dataList, g_getSetValue_list);
+        integrityOf_getSetValue_list({ ...g_dataList }, g_getSetValue_list);
         //
-        if (_newValue === undefined) return g_publicDataList[key];
+        if (_newValue === undefined) return g_dataList[key];
 
         let aux_toRender = new Set();
         let aux_renderList = { ...g_renderList };
@@ -171,6 +173,7 @@ function createNewGlobalContext() {
         g_dataList = aux_dataList;
         g_renderList = aux_renderList;
 
+        if (g_debug) console.log(g_publicDataList);
         return g_dataList[key];
       }
       return getSetValue;
@@ -182,7 +185,7 @@ function createNewGlobalContext() {
         // Asignamos a "aux" un objeto con solo los strings no vacíos del arreglo
         const aux = _newGlobalData.reduce((accumulator, element) => {
           if (typeof element === "string" && element !== "")
-            accumulator[element] = () => console.warn("No hay valor");
+            accumulator[element] = undefined;
           return accumulator;
         }, {});
         // Si el objeto "aux" no está vacío, lo returna
@@ -203,10 +206,14 @@ function createNewGlobalContext() {
 
     // * Inicio de la ejecucion del codigo *****************/
     integrityOf_g_publicDataList({ ...g_dataList }, g_publicDataList);
-    integrityOf_getSetValue_list(g_dataList, g_getSetValue_list);
+    integrityOf_getSetValue_list({ ...g_dataList }, g_getSetValue_list);
 
     if (_useState_function === undefined) return g_getSetValue_list;
     if (_useState_function === 0) return { get: g_publicDataList, set };
+    if (_useState_function === "debug") {
+      g_debug = true;
+      return { get: g_publicDataList, set };
+    }
     // if (typeof _useState_function === "boolean" && _useState_function)
     //   return { get: { ...g_dataList }, set };
 
@@ -214,6 +221,7 @@ function createNewGlobalContext() {
     if (typeof _useState_function === "boolean" && _useState_function) {
       //
       const validProperties = getValidProperties(_newGlobalData);
+      const viewMode = _viewMode;
 
       if (validProperties) {
         g_dataList = initializeValues(
@@ -226,7 +234,7 @@ function createNewGlobalContext() {
         g_renderList = addToRenderList(validProperties, useFunction, {
           ...g_renderList,
         });
-        return typeof _viewMode === "boolean" && _viewMode
+        return viewMode === 0
           ? { get: g_publicDataList, set }
           : g_getSetValue_list;
       } else {
@@ -235,6 +243,7 @@ function createNewGlobalContext() {
       //
     } else {
       const validProperties = getValidProperties(_useState_function);
+      const viewMode = _newGlobalData;
 
       if (validProperties) {
         g_dataList = initializeValues(
@@ -243,7 +252,7 @@ function createNewGlobalContext() {
           g_publicDataList
         );
         initializeNew_getSetValue(validProperties, g_getSetValue_list);
-        return typeof _newGlobalData === "boolean" && _newGlobalData
+        return viewMode === 0
           ? { get: g_publicDataList, set }
           : g_getSetValue_list;
       } else {
