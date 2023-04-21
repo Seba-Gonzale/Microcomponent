@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { uGlobal_users } from "./App.js";
 import Button from "./Button.jsx";
-import utilizeGlobal from "./globalContext";
+import uGlobal from "./globalContext";
 
-function Componente(p_) {
-  const uG = utilizeGlobal(useState, "user");
+function Componente({ suscript }) {
+  const { _get_ } = uGlobal_users(true, [suscript]);
+  console.log(suscript);
   return (
     <>
-      <h1> Hola soy {uG.user[p_.user]()} </h1>
-      <Button />
+      <h1> Hola soy {_get_[suscript].name} </h1>
+      <Button suscript={suscript} />
     </>
   );
 }

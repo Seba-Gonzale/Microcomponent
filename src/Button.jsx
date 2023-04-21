@@ -1,13 +1,17 @@
-import utilizeGlobal from "./globalContext";
+import { uGlobal_users } from "./App";
+import uGlobal from "./globalContext";
 
-function Button() {
-  const uG = utilizeGlobal(["user"]);
-  // utilizeGlobal("debug");
+function Button({ suscript }) {
+  const { _get_, _set_ } = uGlobal_users([suscript]);
 
   return (
     <button
       type="button"
-      onClick={() => uG._set_({ user2: "Franco", user: "javier" })}
+      onClick={() =>
+        _set_({
+          [suscript]: { ..._get_[suscript], name: "Alexis" },
+        })
+      }
     >
       Cambiar usuario
     </button>

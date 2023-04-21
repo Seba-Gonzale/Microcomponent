@@ -22,8 +22,14 @@ function createNewGlobalContext() {
   }
 
   function integrityOf_g_publicDataList(_dataList, g_publicDataList) {
+    // se eliminan las propiedades de g_publicDataList que no ésten en _dataList
     Object.keys(g_publicDataList).forEach((key) => {
       if (!(key in _dataList)) delete g_publicDataList[key];
+    });
+    // se agregan las propiedades de _dataList que g_publicDataList no tiene
+    Object.keys(_dataList).forEach((key) => {
+      if (!(key in g_publicDataList))
+        update_g_publicDataList(g_publicDataList, key, _dataList[key]);
     });
   }
 
@@ -141,13 +147,18 @@ function createNewGlobalContext() {
 
   /**
    *
-   * @param { undefined|boolean|object|string[] } _keepComponentUpdated
+   * @param { undefined|boolean|object|string[] } _subscribe
    * @param {*} _newGlobalData
    * @param {*} _viewMode
    * @returns
    */
-  function Context(_keepComponentUpdated, _newGlobalData) {
+  function context(_subscribe, _newGlobalData) {
     //
+
+    function CreateNewStateFunction(_dataList) {
+      const [newValue, newFunction] = useState(_dataList);
+      return newFunction;
+    }
 
     function initializeValues(_validProperties, _dataList, g_publicDataList) {
       //
@@ -229,8 +240,8 @@ function createNewGlobalContext() {
     // Verificamos que no se hayan agregado propiedades fuerade useGlobal() en g_getSetValue_list
     integrityOf_getSetValue_list({ ...g_dataList }, g_getSetValue_list);
 
-    if (_keepComponentUpdated === undefined) return g_getSetValue_list;
-    if (_keepComponentUpdated === "debug") {
+    if (_subscribe === undefined) return g_getSetValue_list;
+    if (_subscribe === "debug") {
       if (g_debug === false) {
         g_debug = "true";
         console.info("---Debugging On---");
@@ -239,8 +250,8 @@ function createNewGlobalContext() {
       return;
     }
 
-    // if (typeof _keepComponentUpdated === "boolean" && _keepComponentUpdated) {
-    if (_keepComponentUpdated === useState) {
+    if (typeof _subscribe === "boolean" && _subscribe) {
+      // if (_subscribe === useState) {
       //
       const validProperties = validateProperties(_newGlobalData);
 
@@ -251,17 +262,24 @@ function createNewGlobalContext() {
           g_publicDataList
         );
         initializeNew_getSetValue(validProperties, g_getSetValue_list);
-        const useStateValuePair = _keepComponentUpdated({ ...g_dataList });
-        g_renderList = addToRenderList(validProperties, useStateValuePair[1], {
-          ...g_renderList,
-        });
+        // const newStateFunction = CreateNewStateFunction()
+        // const useStateValuePair = newStateFunction({ ...g_dataList });
+        g_renderList = addToRenderList(
+          validProperties,
+          CreateNewStateFunction({ ...g_dataList }),
+          {
+            ...g_renderList,
+          }
+        );
         return g_getSetValue_list;
       } else {
         throw new Error("Invalid Object or Array");
       }
       //
+    } else if (_subscribe === "new") {
+      return createNewGlobalContext();
     } else {
-      const validProperties = validateProperties(_keepComponentUpdated);
+      const validProperties = validateProperties(_subscribe);
 
       if (validProperties) {
         g_dataList = initializeValues(
@@ -277,17 +295,19 @@ function createNewGlobalContext() {
       //
     }
   }
-  return Context;
+  return context;
 }
 
 // se crea un nuevo contexto en el que se manejaran los datos
-const mainContext = createNewGlobalContext();
+const uGlobal = createNewGlobalContext();
 // Función que manejará los datos del contexto
-function utilizeGlobal(_keepComponentUpdated, _newGlobalData, _viewMode) {
-  return mainContext(_keepComponentUpdated, _newGlobalData, _viewMode);
-}
+// function uGlobal(_keepComponentUpdated, _newGlobalData, _viewMode) {
+//   if (typeof _keepComponentUpdated === "boolean" && _keepComponentUpdated)
+//     _keepComponentUpdated = useState;
+//   return mainContext(_keepComponentUpdated, _newGlobalData, _viewMode);
+// }
 
-export default utilizeGlobal;
+export default uGlobal;
 
 /** Emjemplo de otro contexto abajo*/
 
