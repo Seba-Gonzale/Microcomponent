@@ -145,6 +145,21 @@ function createNewGlobalContext() {
     },
   });
 
+  // Convertimos a _get_ en un Objeto iterable
+  // g_getSetValue_list._get_[Symbol.iterator] = function () {
+  //   const keys = Object.keys(this);
+  //   let index = 0;
+  //   return {
+  //     next: () => {
+  //       if (index >= keys.length) {
+  //         return { done: true };
+  //       }
+  //       const key = keys[index++];
+  //       return { value: this[key], done: false };
+  //     },
+  //   };
+  // };
+
   /**
    *
    * @param { undefined|boolean|object|string[] } _subscribe
