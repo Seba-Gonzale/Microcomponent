@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { validateSubscribers } from "./uMicrocomponents/validateSubscribers";
 
 /**
  * @function createNewGlobalContext
@@ -125,6 +126,7 @@ function createNewGlobalContext() {
   let g_debug = false;
 
   // Almacena los datos pasados a la función useGlobal()
+  // ! Es obligatorio inicializar g_dataList como un objeto
   let g_dataList = {};
 
   // Alamacena una copia de g_dataList que será publica y restablecida con los datos integros de g_dataList si ésta es modificada
@@ -168,6 +170,7 @@ function createNewGlobalContext() {
    * @returns
    */
   function context(_subscribe, _newGlobalData) {
+    const perro = "perro";
     //
 
     function CreateNewStateFunction(_dataList) {
@@ -219,36 +222,6 @@ function createNewGlobalContext() {
       }, _renderList);
     }
 
-    /**
-     * @function validateProperties -  comprueba si las nuevas propiedades pueden ser procesadas por useGlobal
-     * @param {*} _newGlobalData - propiedades a comprobar
-     * @returns {undefined | object}
-     */
-    function validateProperties(_newGlobalData) {
-      //
-      if (_newGlobalData instanceof Array && _newGlobalData.length !== 0) {
-        // Asignamos a "aux" un objeto con solo los strings no vacíos del arreglo
-        const aux = _newGlobalData.reduce((accumulator, element) => {
-          if (typeof element === "string" && element !== "")
-            accumulator[element] = undefined;
-          return accumulator;
-        }, {});
-        // Si el objeto "aux" no está vacío, lo returna
-        if (Object.keys(aux).length !== 0) return aux;
-        //
-      } else if (
-        _newGlobalData instanceof Object &&
-        Object.keys(_newGlobalData).length !== 0
-      ) {
-        if ("_$_" in _newGlobalData) {
-          const aux_object = validateProperties(_newGlobalData._$_);
-          if (aux_object !== undefined)
-            return { ..._newGlobalData, ...aux_object };
-        }
-        return _newGlobalData;
-      }
-    }
-
     // * Inicio de la ejecucion del codigo *****************/
     // Verificamos que no se hayan agregado propiedades fuera de useGlobal() en g_publicDataList
     integrityOf_g_publicDataList({ ...g_dataList }, g_publicDataList);
@@ -268,19 +241,19 @@ function createNewGlobalContext() {
     if (typeof _subscribe === "boolean" && _subscribe) {
       // if (_subscribe === useState) {
       //
-      const validProperties = validateProperties(_newGlobalData);
+      const validSubscribers = validateSubscribers(_newGlobalData);
 
-      if (validProperties) {
+      if (validSubscribers) {
         g_dataList = initializeValues(
-          validProperties,
+          validSubscribers,
           { ...g_dataList },
           g_publicDataList
         );
-        initializeNew_getSetValue(validProperties, g_getSetValue_list);
+        initializeNew_getSetValue(validSubscribers, g_getSetValue_list);
         // const newStateFunction = CreateNewStateFunction()
         // const useStateValuePair = newStateFunction({ ...g_dataList });
         g_renderList = addToRenderList(
-          validProperties,
+          validSubscribers,
           CreateNewStateFunction({ ...g_dataList }),
           {
             ...g_renderList,
@@ -294,15 +267,15 @@ function createNewGlobalContext() {
     } else if (_subscribe === "new") {
       return createNewGlobalContext();
     } else {
-      const validProperties = validateProperties(_subscribe);
+      const validSubscribers = validateSubscribers(_subscribe);
 
-      if (validProperties) {
+      if (validSubscribers) {
         g_dataList = initializeValues(
-          validProperties,
+          validSubscribers,
           { ...g_dataList },
           g_publicDataList
         );
-        initializeNew_getSetValue(validProperties, g_getSetValue_list);
+        initializeNew_getSetValue(validSubscribers, g_getSetValue_list);
         return g_getSetValue_list;
       } else {
         throw new Error("invalid _newGlobalData");

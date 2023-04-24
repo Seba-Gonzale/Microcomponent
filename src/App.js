@@ -2,7 +2,7 @@ import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 import Componente from "./Componente";
 import uGlobal from "./globalContext";
-
+import uMicrocomponents from "./uMicrocomponents/Microcomponents";
 const uGlobal_users = uGlobal("new");
 
 const collaborators = [
@@ -48,8 +48,11 @@ const collaborators = [
   },
 ];
 const { _get_ } = uGlobal_users({ ...collaborators });
+const test = uMicrocomponents([{ nano: "Encinas" }]);
 
+console.log(test);
 function App() {
+  console.log({});
   return (
     <div className="App">
       {Object.keys(_get_).map((key) => (
@@ -57,6 +60,8 @@ function App() {
       ))}
 
       {/* <Componente user={"user2"} /> */}
+      <h1>{test[0].mC}</h1>
+      {/* <button onClick={() => (nano.mC = "romi")}>Quiero a Romi</button> */}
     </div>
   );
 }
