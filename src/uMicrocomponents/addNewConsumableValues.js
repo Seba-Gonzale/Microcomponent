@@ -1,5 +1,5 @@
 import { useState } from "react";
-import uMicrocomponents from "./Microcomponents";
+import uMicrocomponents, { _NEW_ } from "./Microcomponents";
 
 function addToMicrocomponentRender(_key, g_mCRenderList, _functionSet) {
   if (_key in g_mCRenderList) {
@@ -9,7 +9,7 @@ function addToMicrocomponentRender(_key, g_mCRenderList, _functionSet) {
   }
 }
 
-function MicroComponent({ _key, g_dataList, g_mCRenderList }) {
+function Microcomponent({ _key, g_dataList, g_mCRenderList }) {
   const [value, functionSet] = useState(g_dataList[_key]);
   addToMicrocomponentRender(_key, g_mCRenderList, functionSet);
   return <>{value}</>;
@@ -40,7 +40,7 @@ function createPropertiesWithGetAndSet(_key, g_dataList, g_mCRenderList) {
     },
     microComponent: {
       get: () => (
-        <MicroComponent
+        <Microcomponent
           _key={_key}
           g_dataList={g_dataList}
           g_mCRenderList={g_mCRenderList}
@@ -51,7 +51,7 @@ function createPropertiesWithGetAndSet(_key, g_dataList, g_mCRenderList) {
     },
     mC: {
       get: () => (
-        <MicroComponent
+        <Microcomponent
           _key={_key}
           g_dataList={g_dataList}
           g_mCRenderList={g_mCRenderList}
@@ -64,21 +64,21 @@ function createPropertiesWithGetAndSet(_key, g_dataList, g_mCRenderList) {
   return object;
 }
 
-function addNewConsumableValues(_publicDataList, g_dataList, g_mCRenderList) {
+function addNewConsumableValues(g_publicDataList, g_dataList, g_mCRenderList) {
   //
   if (!Array.isArray(g_dataList)) {
     //
     Object.keys(g_dataList).forEach((key) => {
-      if (!(key in _publicDataList)) {
+      if (!(key in g_publicDataList)) {
         //
         if (g_dataList[key] instanceof Object) {
-          const newMicroComp = uMicrocomponents("new");
-          Object.defineProperty(_publicDataList, key, {
+          const newMicroComp = uMicrocomponents(_NEW_);
+          Object.defineProperty(g_publicDataList, key, {
             value: newMicroComp(g_dataList[key]),
             enumerable: true,
           });
         } else {
-          Object.defineProperty(_publicDataList, key, {
+          Object.defineProperty(g_publicDataList, key, {
             value: createPropertiesWithGetAndSet(
               key,
               g_dataList,
@@ -89,16 +89,15 @@ function addNewConsumableValues(_publicDataList, g_dataList, g_mCRenderList) {
         }
       }
     });
-    return _publicDataList;
   } else {
-    if (Array.isArray(_publicDataList)) {
-      if (g_dataList.length !== _publicDataList.length) {
-        for (let i = _publicDataList.length; i < g_dataList.length; i++) {
+    if (Array.isArray(g_publicDataList)) {
+      if (g_dataList.length !== g_publicDataList.length) {
+        for (let i = g_publicDataList.length; i < g_dataList.length; i++) {
           if (g_dataList[i] instanceof Object) {
-            const newMicroComp = uMicrocomponents("new");
-            _publicDataList[i] = newMicroComp(g_dataList[i]);
+            const newMicroComp = uMicrocomponents(_NEW_);
+            g_publicDataList[i] = newMicroComp(g_dataList[i]);
           } else {
-            _publicDataList[i] = createPropertiesWithGetAndSet(
+            g_publicDataList[i] = createPropertiesWithGetAndSet(
               i,
               g_dataList,
               g_mCRenderList
@@ -107,20 +106,15 @@ function addNewConsumableValues(_publicDataList, g_dataList, g_mCRenderList) {
         }
       }
     } else {
-      g_dataList.forEach((dontUseValue, i) => {
+      g_publicDataList = g_dataList.map((dontUseValue, i) => {
         if (g_dataList[i] instanceof Object) {
-          const newMicroComp = uMicrocomponents("new");
-          _publicDataList[i] = newMicroComp(g_dataList[i]);
+          const newMicroComp = uMicrocomponents(_NEW_);
+          return newMicroComp(g_dataList[i]);
         } else {
-          _publicDataList[i] = createPropertiesWithGetAndSet(
-            i,
-            g_dataList,
-            g_mCRenderList
-          );
+          return createPropertiesWithGetAndSet(i, g_dataList, g_mCRenderList);
         }
       });
     }
-    return _publicDataList;
   }
 }
 //

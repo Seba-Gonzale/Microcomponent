@@ -2,7 +2,7 @@ import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 import Componente from "./Componente";
 import uGlobal from "./globalContext";
-import uMicrocomponents from "./uMicrocomponents/Microcomponents";
+import uMicrocomponents, { _NEW_ } from "./uMicrocomponents/Microcomponents";
 const uGlobal_users = uGlobal("new");
 
 const collaborators = [
@@ -48,11 +48,14 @@ const collaborators = [
   },
 ];
 const { _get_ } = uGlobal_users({ ...collaborators });
-const test = uMicrocomponents([{ nano: "Encinas" }]);
+// const test = uMicrocomponents({ nano: "Encinas", data: "perris" });
+// const test2 = uMicrocomponents({ emi: "Garcia" });
+const newList = uMicrocomponents(_NEW_);
+const test3 = newList({ map: [new Map(), "hola"] });
 
-console.log(test);
+// console.log(test);
+console.log(test3);
 function App() {
-  console.log({});
   return (
     <div className="App">
       {Object.keys(_get_).map((key) => (
@@ -60,8 +63,10 @@ function App() {
       ))}
 
       {/* <Componente user={"user2"} /> */}
-      <h1>{test[0].mC}</h1>
-      {/* <button onClick={() => (nano.mC = "romi")}>Quiero a Romi</button> */}
+      {/* <h1>{test[0].emi.nano.mC}</h1> */}
+      {/* <button onClick={() => (test[0].emi.nano.mC = "romi")}> */}
+      {/* Quiero a Romi
+      </button> */}
     </div>
   );
 }

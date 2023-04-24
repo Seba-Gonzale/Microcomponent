@@ -1,37 +1,29 @@
-function addNewValues(_validSubscribers, _dataList) {
+function addNewValues(_validSubscribers, g_dataList) {
   //
   if (!Array.isArray(_validSubscribers)) {
-    if (!Array.isArray(_dataList)) {
+    if (!Array.isArray(g_dataList)) {
       //
-      const aux_object = Object.keys(_validSubscribers).reduce(
-        (acc_dList, key) => {
-          if (!(key in acc_dList)) {
-            // se añade la nueva propiedad a acc_dList
-            acc_dList = { ...acc_dList, [key]: _validSubscribers[key] };
-            // se añade la nueva propiedad a g_publicDataList
-          }
-          return acc_dList;
-        },
-        _dataList
-      );
-
-      return aux_object;
+      Object.keys(_validSubscribers).forEach((key) => {
+        if (!(key in g_dataList)) {
+          // se añade la nueva propiedad a g_dataList
+          Object.assign(g_dataList, { [key]: _validSubscribers[key] });
+          // se añade la nueva propiedad a g_publicDataList
+        }
+      });
     } else {
       throw new Error(
-        "Data object syntax does not work on a channel declared as a data array"
+        "Microcomponent: Data object syntax does not work on a list declared as a data array"
       );
     }
   } else {
-    if (!Array.isArray(_dataList)) {
-      if (Object.keys(_dataList).length === 0) {
-        return _validSubscribers;
+    if (Array.isArray(g_dataList)) {
+      if (Object.keys(g_dataList).length === 0) {
+        _validSubscribers.forEach((value) => g_dataList.push(value));
       } else {
         throw new Error(
-          "Data array syntax does not work on a channel declared as a data object"
+          "Microcomponent: Data array syntax does not work on a list declared as a data object"
         );
       }
-    } else {
-      return [..._dataList, ..._validSubscribers];
     }
   }
   //

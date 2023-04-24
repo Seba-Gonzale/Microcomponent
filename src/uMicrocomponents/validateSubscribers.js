@@ -1,28 +1,18 @@
 /**
  *
- * @param {*} _newGlobalData
+ * @param {*} _newSubscribers
  * @returns {[object Object], Array}
  */
-function validateSubscribers(_newGlobalData) {
+function validateSubscribers(_newSubscribers) {
   //
-  if (_newGlobalData instanceof Array && _newGlobalData.length !== 0) {
-    // Asignamos a "aux" un objeto con solo los strings no vacíos del arreglo
-    if (typeof _newGlobalData[0] === "string") {
-      const aux = _newGlobalData.reduce((accumulator, element) => {
-        if (typeof element === "string" && element !== "")
-          accumulator[element] = undefined;
-        return accumulator;
-      }, {});
-      // Si el objeto "aux" no está vacío, lo returna
-      if (Object.keys(aux).length !== 0) return aux;
-    } else {
-      return _newGlobalData;
-    }
+  if (_newSubscribers instanceof Array && _newSubscribers.length !== 0) {
+    return [..._newSubscribers];
     //
   } else if (
-    Object.prototype.toString.call(_newGlobalData) === "[object Object]"
+    Object.prototype.toString.call(_newSubscribers) === "[object Object]" &&
+    Object.keys(_newSubscribers).length !== 0
   ) {
-    return _newGlobalData;
+    return { ..._newSubscribers };
   }
 }
 
