@@ -17,13 +17,13 @@ function addNewValues(_validSubscribers, g_dataList) {
     }
   } else {
     if (Array.isArray(g_dataList)) {
-      if (Object.keys(g_dataList).length === 0) {
+      if (g_dataList.length === 0) {
         _validSubscribers.forEach((value) => g_dataList.push(value));
-      } else {
-        throw new Error(
-          "Microcomponent: Data array syntax does not work on a list declared as a data object"
-        );
       }
+    } else {
+      throw new Error(
+        "Microcomponent: Data array syntax does not work on a list declared as a data object"
+      );
     }
   }
   //

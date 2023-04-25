@@ -4,7 +4,6 @@ import uGlobal from "./globalContext";
 
 function Componente({ suscript }) {
   const { _get_ } = uGlobal_users(true, [suscript]);
-  console.log(suscript);
   return (
     <>
       <h1> Hola soy {_get_[suscript].name} </h1>
