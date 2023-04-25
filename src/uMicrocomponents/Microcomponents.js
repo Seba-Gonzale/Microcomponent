@@ -4,8 +4,9 @@ import { addNewValues } from "./addNewValues";
 import { addNewConsumableValues } from "./addNewConsumableValues";
 import inicializeVariables from "./inicializeVariables";
 import { useState } from "react";
+import addConsumableObject from "../addConsumableObject";
+import subscriptionsOnly from "./subscriptionsOnly";
 
-export const _NEW_ = "N*-_#$E*-_%Wñ1+}";
 function createListOfMicrocomponents() {
   let g_dataList;
   let g_publicDataList;
@@ -15,7 +16,6 @@ function createListOfMicrocomponents() {
   let g_cRenderList = {};
 
   function uMicrocomponents(..._data) {
-    let data = _data;
     let render = [true];
 
     function CreateStatusClip() {
@@ -23,43 +23,39 @@ function createListOfMicrocomponents() {
       return stateFunction;
     }
 
+    function renderValues(..._data) {
+      if (typeof _data[0] === "string" || typeof _data[0] === "number") {
+        const validData = _data.filter(
+          (value) =>
+            (typeof value === "string" || typeof value === "number") &&
+            value in g_cRenderList
+        );
+        if (validData.length !== 0) {
+          let aux_list = [];
+          validData.forEach((value) => {
+            aux_list = [...aux_list, ...g_cRenderList[value]];
+          });
+          const aux_set = new Set(aux_list);
+          console.log(aux_set);
+          [...aux_set].forEach((fx) => {
+            fx(1);
+          });
+          return true;
+        }
+      }
+      return false;
+    }
+
     function wantToStayUpdated(_data, _render) {
       if (typeof _data[0] === "boolean") {
         _render[0] = _data[0];
         return _data.shift();
       }
-      return _data;
     }
 
-    function justWantASubscription(_data, g_cRenderList, ..._dataList) {
-      console.log(_dataList);
-      if (typeof _data[0] === "string" || typeof _data[0] === "number") {
-        const validData = _data.filter(
-          (value) =>
-            (typeof value === "string" || typeof value === "number") &&
-            value in g_dataList
-        );
-        if (validData.length !== 0) {
-          const stateClip = CreateStatusClip();
-          validData.forEach((value) => {
-            g_cRenderList[value] = stateClip;
-          });
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    if (data.length === 0) return g_publicDataList;
+    if (_data.length === 0) return g_publicDataList;
     if (_data[0] === _NEW_) return createListOfMicrocomponents();
-
-    data = wantToStayUpdated(data, render);
-    if (render[0]) {
-      if (justWantASubscription(data, g_cRenderList, g_dataList)) {
-        return g_publicDataList;
-      }
-    }
+    wantToStayUpdated(_data, render);
 
     const validSubscribers = validateSubscribers(_data[0]);
 
@@ -67,24 +63,32 @@ function createListOfMicrocomponents() {
       if (g_dataList === undefined) {
         g_dataList = inicializeVariables(validSubscribers);
         g_publicDataList = inicializeVariables(validSubscribers);
+        if (_data[_data.length - 1] !== false)
+          Object.defineProperty(g_publicDataList, "_set_", {
+            value: renderValues,
+          });
       }
       addNewValues(validSubscribers, g_dataList);
       addNewConsumableValues(g_publicDataList, g_dataList, g_mCRenderList);
+      if (render[0]) {
+        subscriptionsOnly(
+          Object.keys(validSubscribers),
+          g_cRenderList,
+          g_dataList,
+          CreateStatusClip
+        );
+      }
       return g_publicDataList;
-    } else if (_data[0] instanceof Object) {
-      // ! Terminar
-      g_publicDataList = {};
-      g_dataList = _data[0];
-      Object.defineProperties(g_publicDataList, {
-        value: {
-          get: () => g_dataList,
-          set: (value) => (g_dataList = value),
-        },
-        v: {
-          get: () => g_dataList,
-          set: (value) => (g_dataList = value),
-        },
-      });
+    } else {
+      if (_data[0] instanceof Object) {
+        g_dataList = _data[0];
+        g_publicDataList = {};
+        addConsumableObject(g_publicDataList, g_dataList);
+        return g_publicDataList;
+      }
+    }
+
+    if (subscriptionsOnly(_data, g_cRenderList, g_dataList, CreateStatusClip)) {
       return g_publicDataList;
     }
   }
@@ -92,4 +96,6 @@ function createListOfMicrocomponents() {
   return uMicrocomponents;
 }
 const uMicrocomponents = createListOfMicrocomponents();
+
+export const _NEW_ = "N*-_#$E*-_%Wñ1+}";
 export default uMicrocomponents;

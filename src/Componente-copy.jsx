@@ -1,14 +1,11 @@
+import { v4 } from "uuid";
+
 function Componente2({ obj }) {
   return (
     <>
       <h1> Hola soy {obj.name.mC} </h1>
-      <Button2 name={obj.name} />
+      <button onClick={() => (obj.name.mC = v4())}>Haz Click!</button>
     </>
   );
 }
-
-function Button2({ name }) {
-  return <button onClick={() => (name.mC = "William")}>Haz Click!</button>;
-}
-
 export default Componente2;

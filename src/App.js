@@ -49,31 +49,54 @@ const collaborators = [
   },
 ];
 const { _get_ } = uGlobal_users({ ...collaborators });
-const test1 = uMicrocomponents({ map: [new Map(), "hola"] });
-const test2 = uMicrocomponents({ 0: "Garcia" });
-export const newList = uMicrocomponents(_NEW_);
-const test = newList(false, collaborators);
-const uuid = uuidv4();
+const test1 = uMicrocomponents(false, {
+  map: [new Map(), "hola"],
+  10: "Garcia",
+});
 
 function App() {
-  uMicrocomponents(0, 1);
-  console.log(uuid);
+  const test2 = uMicrocomponents({ ...collaborators });
+  console.log(test2);
   return (
     <div className="App">
       {Object.keys(_get_).map((key) => (
         <Componente suscript={key} key={key} />
       ))}
-      {test.map((value, index) => {
+      {/* {test.map((value, index) => {
         return <Componente2 obj={value} key={index} />;
-      })}
+      })} */}
 
       {/* <Componente user={"user2"} /> */}
       {/* <h1>{test[0].emi.nano.mC}</h1> */}
       {/* <button onClick={() => (test[0].emi.nano.mC = "romi")}> */}
       {/* Quiero a Romi
       </button> */}
+      <h1>{test2[0].id.mC}</h1>
+      <h1>{test2[2].id.mC}</h1>
+      <OtherComp name={test2[0]} />
+      <OtherComp name={test2[2]} />
+      <button
+        onClick={() => {
+          test2[0].id.v = "Lopez";
+          test2[2].id.v = "Mernez";
+          test2._set_(0, 2);
+        }}
+      >
+        Clickkkk
+      </button>
+      <button
+        onClick={() => {
+          test2[0].id.mC = "Ramirez";
+        }}
+      >
+        Clickkkk
+      </button>
     </div>
   );
+}
+
+function OtherComp({ name }) {
+  return <h3>{name.id.v}</h3>;
 }
 
 export { uGlobal_users };
