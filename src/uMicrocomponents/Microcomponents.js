@@ -28,6 +28,9 @@ function createListOfMicrocomponents() {
         if (validData.length !== 0) {
           let aux_list = [];
           validData.forEach((value) => {
+            // !Hacer
+            if (g_dataList[value]) {
+            }
             aux_list = [...aux_list, ...g_cRenderList[value]];
           });
           const aux_set = new Set(aux_list);
