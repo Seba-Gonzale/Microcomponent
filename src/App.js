@@ -49,10 +49,10 @@ const collaborators = [
   },
 ];
 const { _get_ } = uGlobal_users({ ...collaborators });
-const test1 = uMicrocomponents(false, {
-  map: [new Map(), "hola"],
-  10: "Garcia",
-});
+// const test1 = uMicrocomponents(false, {
+//   map: [new Map(), "hola"],
+//   10: "Garcia",
+// });
 
 function App() {
   const test2 = uMicrocomponents({ ...collaborators });
@@ -79,6 +79,15 @@ function App() {
         onClick={() => {
           test2[0].id.v = "Lopez";
           test2[2].id.v = "Mernez";
+          test2._set_(0, 2);
+        }}
+      >
+        Clickkkk
+      </button>
+      <button
+        onClick={() => {
+          test2[0].id.v = "Miguel";
+          test2[2].id.v = "Cogote";
           test2._set_(0, 2);
         }}
       >

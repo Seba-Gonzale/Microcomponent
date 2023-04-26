@@ -18,11 +18,6 @@ function createListOfMicrocomponents() {
   function uMicrocomponents(..._data) {
     let render = [true];
 
-    function CreateStatusClip() {
-      const [v, stateFunction] = useState();
-      return stateFunction;
-    }
-
     function renderValues(..._data) {
       if (typeof _data[0] === "string" || typeof _data[0] === "number") {
         const validData = _data.filter(
@@ -38,7 +33,7 @@ function createListOfMicrocomponents() {
           const aux_set = new Set(aux_list);
           console.log(aux_set);
           [...aux_set].forEach((fx) => {
-            fx(1);
+            fx(Math.random());
           });
           return true;
         }
@@ -74,8 +69,7 @@ function createListOfMicrocomponents() {
         subscriptionsOnly(
           Object.keys(validSubscribers),
           g_cRenderList,
-          g_dataList,
-          CreateStatusClip
+          g_dataList
         );
       }
       return g_publicDataList;
@@ -88,7 +82,7 @@ function createListOfMicrocomponents() {
       }
     }
 
-    if (subscriptionsOnly(_data, g_cRenderList, g_dataList, CreateStatusClip)) {
+    if (subscriptionsOnly(_data, g_cRenderList, g_dataList)) {
       return g_publicDataList;
     }
   }

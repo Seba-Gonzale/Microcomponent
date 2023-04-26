@@ -1,4 +1,12 @@
-function subscriptionsOnly(_data, g_cRenderList, _dataList, CreateStatusClip) {
+import { useState } from "react";
+
+function CreateStatusClip() {
+  const [v, stateFunction] = useState();
+  return stateFunction;
+}
+// ! revisa que no se suscriban suscriptoresValidos repetidos en g_publicDataList
+// ! revisa si puedes usar un solo useState para todos lo que usen el valor
+function subscriptionsOnly(_data, g_cRenderList, _dataList) {
   if (typeof _data[0] === "string" || typeof _data[0] === "number") {
     //
     const validData = _data.filter(

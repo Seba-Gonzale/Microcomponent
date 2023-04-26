@@ -12,13 +12,15 @@ function addToMicrocomponentRender(_key, g_mCRenderList, _functionSet) {
 function Microcomponent({ _key, g_dataList, g_mCRenderList }) {
   const [value, functionSet] = useState(g_dataList[_key]);
   addToMicrocomponentRender(_key, g_mCRenderList, functionSet);
+  console.log("render");
   return <>{g_dataList[_key]}</>;
 }
 
 function setValueIntoMicrocomponents(_key, g_dataList, g_mCRenderList, _value) {
+  const aux = {};
   if (g_dataList[_key] !== _value) {
     g_dataList[_key] = _value;
-    setTimeout(() => [...g_mCRenderList[_key]].forEach((fx) => fx(_value)), 0);
+    setTimeout(() => [...g_mCRenderList[_key]].forEach((fx) => fx(aux)), 0);
   }
 }
 
