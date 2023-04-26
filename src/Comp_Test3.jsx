@@ -1,10 +1,5 @@
-import "./App.css";
 import { v4 as uuidv4 } from "uuid";
-import Componente from "./Componente";
-import uGlobal from "./globalContext";
-import CompTest3 from "./Comp_Test3";
-import CompTest4 from "./Comp_Test4";
-const uGlobal_users = uGlobal("new");
+import uMicroC, { _NEW_ } from "./Microcomponents/Microcomponents";
 
 const collaborators = [
   {
@@ -48,32 +43,33 @@ const collaborators = [
     fav: false,
   },
 ];
-const { _get_ } = uGlobal_users({ ...collaborators });
-// const test1 = uMicrocomponents(false, {
-//   map: [new Map(), "hola"],
-//   10: "Garcia",
-// });
 
-function App() {
+export const uM_test3 = uMicroC(_NEW_);
+const test3 = uM_test3(false, { name: "Emi", age: "27", gender: "female" });
+
+export default function CompTest3() {
+  const test2 = uMicroC(collaborators);
+
   return (
-    <div className="App">
-      {Object.keys(_get_).map((key) => (
-        <Componente suscript={key} key={key} />
-      ))}
-      {/* {test.map((value, index) => {
-        return <Componente2 obj={value} key={index} />;
-      })} */}
-
-      {/* <Componente user={"user2"} /> */}
-      {/* <h1>{test[0].emi.nano.mC}</h1> */}
-      {/* <button onClick={() => (test[0].emi.nano.mC = "romi")}> */}
-      {/* Quiero a Romi
-      </button> */}
-      <CompTest3 />
-      <CompTest4 />
-    </div>
+    <>
+      <button
+        onClick={() => {
+          test2[0].id.v = "Miguel";
+          test2[2].id.v = "Cogote";
+          test3.name.v = "Mimi";
+          test2._set_(0);
+        }}
+      >
+        Clickkkk
+      </button>
+      <button
+        onClick={() => {
+          test2[0].id.mC = "123456789";
+          test2[0].name.mC = "Ramirez Mabel";
+        }}
+      >
+        Clickkkk
+      </button>
+    </>
   );
 }
-
-export { uGlobal_users };
-export default App;

@@ -1,11 +1,10 @@
 // import { useState } from "react";
 import { validateSubscribers } from "./validateSubscribers";
 import { addNewValues } from "./addNewValues";
-import { addNewConsumableValues } from "./addNewConsumableValues";
 import inicializeVariables from "./inicializeVariables";
-import { useState } from "react";
-import addConsumableObject from "../addConsumableObject";
+import createProperty_v from "./createProperty_v";
 import subscriptionsOnly from "./subscriptionsOnly";
+import renderValues from "./renderValues";
 
 function createListOfMicrocomponents() {
   let g_dataList;
@@ -15,60 +14,44 @@ function createListOfMicrocomponents() {
   // * Es obligatorio inicializar como objeto
   let g_cRenderList = {};
 
-  function uMicrocomponents(..._data) {
-    let render = [true];
+  function uMicroC(..._data) {
+    let render = true;
 
-    function renderValues(..._data) {
-      if (typeof _data[0] === "string" || typeof _data[0] === "number") {
-        const validData = _data.filter(
-          (value) =>
-            (typeof value === "string" || typeof value === "number") &&
-            value in g_cRenderList
-        );
-        if (validData.length !== 0) {
-          let aux_list = [];
-          validData.forEach((value) => {
-            // !Hacer
-            if (g_dataList[value]) {
-            }
-            aux_list = [...aux_list, ...g_cRenderList[value]];
-          });
-          const aux_set = new Set(aux_list);
-          console.log(aux_set);
-          [...aux_set].forEach((fx) => {
-            fx(Math.random());
-          });
-          return true;
-        }
-      }
-      return false;
+    function requestRendering(..._indexs) {
+      renderValues(_indexs, { ...g_dataList }, g_cRenderList);
     }
 
     function wantToStayUpdated(_data, _render) {
-      if (typeof _data[0] === "boolean") {
-        _render[0] = _data[0];
-        return _data.shift();
+      if (typeof _data[0] === "boolean" && _data[0] === false) {
+        _render = _data[0];
+        _data.shift();
       }
+      return _render;
     }
 
     if (_data.length === 0) return g_publicDataList;
     if (_data[0] === _NEW_) return createListOfMicrocomponents();
-    wantToStayUpdated(_data, render);
+    render = wantToStayUpdated(_data, render);
 
     const validSubscribers = validateSubscribers(_data[0]);
-
     if (validSubscribers) {
+      //
       if (g_dataList === undefined) {
+        //
         g_dataList = inicializeVariables(validSubscribers);
         g_publicDataList = inicializeVariables(validSubscribers);
         if (_data[_data.length - 1] !== false)
           Object.defineProperty(g_publicDataList, "_set_", {
-            value: renderValues,
+            value: requestRendering,
           });
       }
-      addNewValues(validSubscribers, g_dataList);
-      addNewConsumableValues(g_publicDataList, g_dataList, g_mCRenderList);
-      if (render[0]) {
+      addNewValues(
+        validSubscribers,
+        g_dataList,
+        g_publicDataList,
+        g_mCRenderList
+      );
+      if (render) {
         subscriptionsOnly(
           Object.keys(validSubscribers),
           g_cRenderList,
@@ -80,7 +63,7 @@ function createListOfMicrocomponents() {
       if (_data[0] instanceof Object) {
         g_dataList = _data[0];
         g_publicDataList = {};
-        addConsumableObject(g_publicDataList, g_dataList);
+        createProperty_v(g_publicDataList, g_dataList);
         return g_publicDataList;
       }
     }
@@ -90,9 +73,9 @@ function createListOfMicrocomponents() {
     }
   }
 
-  return uMicrocomponents;
+  return uMicroC;
 }
-const uMicrocomponents = createListOfMicrocomponents();
+const uMicroC = createListOfMicrocomponents();
 
 export const _NEW_ = "N*-_#$E*-_%Wñ1+}";
-export default uMicrocomponents;
+export default uMicroC;

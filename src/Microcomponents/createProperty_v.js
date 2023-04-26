@@ -1,4 +1,4 @@
-function addConsumableObject(g_publicDataList, g_dataList) {
+function createProperty_v(g_publicDataList, g_dataList) {
   Object.defineProperties(g_publicDataList, {
     value: {
       get: () => g_dataList,
@@ -11,4 +11,4 @@ function addConsumableObject(g_publicDataList, g_dataList) {
   });
 }
 
-export default addConsumableObject;
+export default createProperty_v;
