@@ -66,6 +66,7 @@ export default function CompTest3() {
         onClick={() => {
           test2[0].id.mC = "123456789";
           test2[0].name.mC = "Ramirez Mabel";
+          console.log(test2._get_);
         }}
       >
         Clickkkk

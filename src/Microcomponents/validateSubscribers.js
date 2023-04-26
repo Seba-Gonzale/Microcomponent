@@ -16,4 +16,4 @@ function validateSubscribers(_newSubscribers) {
   }
 }
 
-export { validateSubscribers };
+export default validateSubscribers;
