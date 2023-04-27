@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import uMicroC, { _NEW_ } from "./Microcomponents/Microcomponents";
+import uMicroC, { NEW } from "./Microcomponents/Microcomponents";
 
 const collaborators = [
   {
@@ -44,12 +44,17 @@ const collaborators = [
   },
 ];
 
-export const uM_test3 = uMicroC(_NEW_);
+export const uM_test3 = uMicroC(NEW);
+export const uM_test4 = uMicroC(NEW);
 const test3 = uM_test3(false, { name: "Emi", age: "27", gender: "female" });
+test3.friend = "seba";
+uM_test3(false, { perro: [new Map()] });
+console.log(...test3);
 
 export default function CompTest3() {
   const test2 = uMicroC(collaborators);
-
+  const test = uMicroC(["jaja"]);
+  // console.log(test2);
   return (
     <>
       <button
@@ -57,6 +62,7 @@ export default function CompTest3() {
           test2[0].id.v = "Miguel";
           test2[2].id.v = "Cogote";
           test3.name.v = "Mimi";
+          console.log(test2._get_);
           test2._set_(0);
         }}
       >
@@ -67,6 +73,9 @@ export default function CompTest3() {
           test2[0].id.mC = "123456789";
           test2[0].name.mC = "Ramirez Mabel";
           console.log(test2._get_);
+          console.log(test3);
+          // uM_test3(false, { friend: "nano" });
+          // console.log(test3);
         }}
       >
         Clickkkk

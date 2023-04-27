@@ -4,7 +4,6 @@ function CreateStatusClip() {
   const [v, stateFunction] = useState();
   return stateFunction;
 }
-// ! revisa que no se suscriban suscriptoresValidos repetidos en g_publicDataList
 function subscriptionsOnly(_data, g_cRenderList, _dataList) {
   if (typeof _data[0] === "string" || typeof _data[0] === "number") {
     //
@@ -22,10 +21,10 @@ function subscriptionsOnly(_data, g_cRenderList, _dataList) {
           g_cRenderList[value] = new Set([stateClip]);
         }
       });
-      return true;
     }
+  } else {
+    console.error("The parameters to be subscribed are not found in the list");
   }
-  return false;
 }
 
 export default subscriptionsOnly;

@@ -29,14 +29,12 @@ function createProperties_v_mC(_key, g_dataList, g_mCRenderList, g_parentList) {
       get: () => g_dataList[_key],
       set: (value) => {
         g_dataList[_key] = value;
-        g_parentList[_key] = value;
       },
     },
     v: {
       get: () => g_dataList[_key],
       set: (value) => {
         g_dataList[_key] = value;
-        g_parentList[_key] = value;
       },
     },
     microComponent: {
@@ -49,7 +47,6 @@ function createProperties_v_mC(_key, g_dataList, g_mCRenderList, g_parentList) {
       ),
       set: (value) => {
         setMicrocomponents(_key, g_dataList, g_mCRenderList, value);
-        g_parentList[_key] = value;
       },
     },
     mC: {
@@ -62,7 +59,6 @@ function createProperties_v_mC(_key, g_dataList, g_mCRenderList, g_parentList) {
       ),
       set: (value) => {
         setMicrocomponents(_key, g_dataList, g_mCRenderList, value);
-        g_parentList[_key] = value;
       },
     },
   });

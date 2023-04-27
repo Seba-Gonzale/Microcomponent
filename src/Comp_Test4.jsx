@@ -3,8 +3,7 @@ import uMicroC from "./Microcomponents/Microcomponents";
 
 export default function CompTest4() {
   const test2 = uMicroC(0, 3);
-  const test3 = uM_test3();
-
+  const test3 = uM_test3({ gato: "miau" });
   return (
     <>
       <h1>{test2[0].id.mC}</h1>
