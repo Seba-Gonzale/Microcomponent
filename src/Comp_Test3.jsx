@@ -49,7 +49,9 @@ export const uM_test4 = uMicroC(NEW);
 const test3 = uM_test3(false, { name: "Emi", age: "27", gender: "female" });
 test3.friend = "seba";
 uM_test3(false, { perro: [new Map()] });
-console.log(...test3);
+console.log({ ...test3 });
+// const re = { re: "re" };
+// console.log([...re]);
 
 export default function CompTest3() {
   const test2 = uMicroC(collaborators);

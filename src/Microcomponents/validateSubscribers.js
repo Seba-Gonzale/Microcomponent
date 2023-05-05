@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  *
  * @param {*} _newSubscribers
@@ -10,7 +12,8 @@ function validateSubscribers(_newSubscribers) {
     //
   } else if (
     Object.prototype.toString.call(_newSubscribers) === "[object Object]" &&
-    Object.keys(_newSubscribers).length !== 0
+    Object.keys(_newSubscribers).length !== 0 &&
+    !React.isValidElement(_newSubscribers)
   ) {
     return _newSubscribers;
   }
