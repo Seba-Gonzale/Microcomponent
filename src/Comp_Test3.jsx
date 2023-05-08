@@ -46,25 +46,32 @@ const collaborators = [
 
 export const uM_test3 = uMicroC(NEW);
 export const uM_test4 = uMicroC(NEW);
-const test3 = uM_test3(false, { name: "Emi", age: "27", gender: "female" });
-test3.friend = "seba";
-uM_test3(false, { perro: [new Map()] });
-console.log({ ...test3 });
-// const re = { re: "re" };
-// console.log([...re]);
+const test3 = uM_test3(null, {
+  name: { otherName: "Emi" },
+  age: "27",
+  gender: "female",
+});
+uM_test3(null, { perro: [new Map()] });
+const test4 = uM_test4(false, {
+  fullName: { name: "sebi" },
+});
 
 export default function CompTest3() {
   const test2 = uMicroC(collaborators);
-  const test = uMicroC(["jaja"]);
-  // console.log(test2);
+  uM_test4(true, {
+    pets: { perro: "Atom", perro2: "Akamaru" },
+    sister: "Nayla",
+  });
+  console.log(collaborators[0].id);
   return (
     <>
+      <p>Hola soy {test4.sister.v}</p>
       <button
         onClick={() => {
           test2[0].id.v = "Miguel";
           test2[2].id.v = "Cogote";
-          test3.name.v = "Mimi";
-          console.log(test2._get_);
+          test3.name.otherName.v = "Mimi";
+          test4.sister.v = "Naylon?";
           test2._set_(0);
         }}
       >
@@ -74,10 +81,8 @@ export default function CompTest3() {
         onClick={() => {
           test2[0].id.mC = "123456789";
           test2[0].name.mC = "Ramirez Mabel";
-          console.log(test2._get_);
-          console.log(test3);
-          // uM_test3(false, { friend: "nano" });
-          // console.log(test3);
+          test4.sister.v = "Dario?";
+          test4._set_("sister");
         }}
       >
         Clickkkk

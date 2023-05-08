@@ -5,7 +5,8 @@ function addNewValues(
   _validSubscribers,
   g_dataList,
   g_publicDataList,
-  g_mCRenderList
+  g_mCRenderList,
+  _addStatus
 ) {
   //
   if (!Array.isArray(_validSubscribers)) {
@@ -20,7 +21,8 @@ function addNewValues(
             key,
             g_dataList,
             g_publicDataList,
-            g_mCRenderList
+            g_mCRenderList,
+            _addStatus
           );
         }
       });
@@ -34,12 +36,23 @@ function addNewValues(
       if (g_dataList.length === 0) {
         _validSubscribers.forEach((value, i) => {
           g_dataList[i] = value;
-          addToPublicDataArray(i, g_dataList, g_publicDataList, g_mCRenderList);
+          addToPublicDataArray(
+            i,
+            g_dataList,
+            g_publicDataList,
+            g_mCRenderList,
+            _addStatus
+          );
         });
       } else {
-        console.warn(
-          "only one data array can be created. If you want to add data, do it in a data object"
-        );
+        if (
+          _validSubscribers[0] !== g_dataList[0] &&
+          _validSubscribers.length !== g_dataList.length
+        ) {
+          console.warn(
+            "only one data array can be created. If you want to add data, do it in a data object"
+          );
+        }
       }
     } else {
       throw new Error(

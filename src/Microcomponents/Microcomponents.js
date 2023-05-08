@@ -17,35 +17,41 @@ function createListOfMicrocomponents() {
   // * Es obligatorio inicializar como objeto
   let g_cRenderList = {};
 
-  function uMicroC(..._data) {
-    let render = true;
+  function uMicroC(...data) {
+    let addStatus;
 
     function requestRendering(..._indices) {
       renderValues(_indices, { ...g_dataList }, g_cRenderList);
     }
 
-    function wantToStayUpdated(_data, _render) {
-      if (typeof _data[0] === "boolean" && _data[0] === false) {
-        _render = _data[0];
-        _data.shift();
+    function wantToStayUpdated(data) {
+      const addStatus = data[0];
+      if (addStatus === null) {
+        data.shift();
+        return null;
+      } else if (typeof addStatus === "boolean" && addStatus === true) {
+        data.shift();
+        return true;
+      } else if (typeof addStatus === "boolean" && addStatus === false) {
+        data.shift();
+        return false;
       }
-      return _render;
     }
 
-    checkIntegrity(_data[_data.length - 1], g_dataList, g_publicDataList);
+    checkIntegrity(data[data.length - 1], g_dataList, g_publicDataList);
 
-    if (_data.length === 0) return g_publicDataList;
-    if (_data[0] === NEW) return createListOfMicrocomponents();
-    render = wantToStayUpdated(_data, render);
+    if (data.length === 0) return g_publicDataList;
+    if (data[0] === NEW) return createListOfMicrocomponents();
+    addStatus = wantToStayUpdated(data);
 
-    const validSubscribers = validateSubscribers(_data[0]);
+    const validSubscribers = validateSubscribers(data[0]);
     if (validSubscribers) {
       //
       if (g_dataList === undefined) {
         //
         g_dataList = inicializeVariables(validSubscribers);
         g_publicDataList = inicializeVariables(validSubscribers);
-        if (_data[_data.length - 1] !== _RECURSION_) {
+        if (data[data.length - 1] !== _RECURSION_) {
           Object.defineProperty(g_publicDataList, "_set_", {
             value: requestRendering,
           });
@@ -58,28 +64,29 @@ function createListOfMicrocomponents() {
         validSubscribers,
         g_dataList,
         g_publicDataList,
-        g_mCRenderList
+        g_mCRenderList,
+        addStatus
       );
-      if (render) {
+      if (addStatus || addStatus === undefined) {
         subscriptionsOnly(
           Object.keys(validSubscribers),
           g_cRenderList,
           g_dataList
         );
       }
-    } else if (_data[0] instanceof Object) {
+    } else if (data[0] instanceof Object) {
       if (g_dataList === undefined) {
-        g_dataList = _data[0];
+        g_dataList = data[0];
         g_publicDataList = {};
         createProperty_v(g_publicDataList, g_dataList);
       } else {
         console.error("Cannot convert object!");
       }
     } else {
-      subscriptionsOnly(_data, g_cRenderList, g_dataList);
+      subscriptionsOnly(data, g_cRenderList, g_dataList);
     }
 
-    if (_data[_data.length - 1] === _RECURSION_) {
+    if (data[data.length - 1] === _RECURSION_) {
       return [g_publicDataList, g_dataList];
     } else {
       return g_publicDataList;
