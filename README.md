@@ -1,2 +1,2 @@
-# `globalContext`
+# `Microcomponent`
 ## under construction
