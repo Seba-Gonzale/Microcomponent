@@ -13,7 +13,7 @@ function addToPublicDataArray(
     if (typeof _addStatus !== "boolean") {
       const newMicroComp = uMicroC(NEW);
       const [newPublicData, newData] = newMicroComp(
-        false,
+        null,
         g_dataList[_i],
         _RECURSION_
       );

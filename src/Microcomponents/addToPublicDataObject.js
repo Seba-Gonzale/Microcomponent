@@ -13,7 +13,7 @@ function addToPublicDataObject(
     if (typeof _addStatus !== "boolean") {
       const newMicroComp = uMicroC(NEW);
       const [newPublicData, newData] = newMicroComp(
-        false,
+        null,
         g_dataList[_key],
         _RECURSION_
       );

@@ -4,6 +4,7 @@ import Componente from "./Componente";
 import uGlobal from "./globalContext";
 import CompTest3 from "./Comp_Test3";
 import CompTest4 from "./Comp_Test4";
+import CompTest2 from "./Comp_Test2";
 const uGlobal_users = uGlobal("new");
 
 const collaborators = [
@@ -70,6 +71,7 @@ function App() {
       {/* Quiero a Romi
       </button> */}
       <CompTest3 />
+      <CompTest2 />
       <CompTest4 />
     </div>
   );

@@ -18,7 +18,9 @@ function setMicrocomponents(_key, g_dataList, g_mCRenderList, _value) {
   if (g_dataList[_key] !== _value) {
     const aux = {};
     g_dataList[_key] = _value;
-    setTimeout(() => [...g_mCRenderList[_key]].forEach((fx) => fx(aux)), 0);
+    if (g_mCRenderList[_key] !== undefined) {
+      setTimeout(() => [...g_mCRenderList[_key]].forEach((fx) => fx(aux)), 0);
+    }
   }
 }
 
@@ -28,13 +30,13 @@ function createProperties_v_mC(_key, g_dataList, g_mCRenderList, g_parentList) {
     value: {
       get: () => g_dataList[_key],
       set: (value) => {
-        g_dataList[_key] = value;
+        setMicrocomponents(_key, g_dataList, g_mCRenderList, value);
       },
     },
     v: {
       get: () => g_dataList[_key],
       set: (value) => {
-        g_dataList[_key] = value;
+        setMicrocomponents(_key, g_dataList, g_mCRenderList, value);
       },
     },
     microComponent: {
