@@ -56,7 +56,7 @@ function createListOfMicrocomponents() {
             value: requestRendering,
           });
           Object.defineProperty(g_publicDataList, "_get_", {
-            value: () => g_dataList,
+            value: (key) => (key === undefined ? g_dataList : g_dataList[key]),
           });
         }
       }

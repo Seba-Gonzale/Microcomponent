@@ -44,10 +44,10 @@ const collaborators = [
   },
 ];
 
-export const uM_test2 = uMicroC(NEW);
+export const uM_test1 = uMicroC(NEW);
 export const uM_test3 = uMicroC(NEW);
 export const uM_test4 = uMicroC(NEW);
-const test1 = uM_test2(null, { collaborators });
+const test1 = uM_test1(null, collaborators);
 const test3 = uM_test3(null, {
   name: { otherName: "Emi" },
   age: "27",
@@ -60,12 +60,10 @@ const test4 = uM_test4(false, {
 
 export default function CompTest3() {
   const test2 = uMicroC(collaborators);
-  console.log(test2);
   uM_test4(true, {
     pets: { perro: "Atom", perro2: "Akamaru" },
     sister: "Nayla",
   });
-  console.log(collaborators[0].id);
   return (
     <>
       <p>Hola soy {test4.sister.v}</p>

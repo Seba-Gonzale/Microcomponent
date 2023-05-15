@@ -44,15 +44,6 @@ function addNewValues(
             _addStatus
           );
         });
-      } else {
-        if (
-          _validSubscribers[0] !== g_dataList[0] &&
-          _validSubscribers.length !== g_dataList.length
-        ) {
-          console.warn(
-            "only one data array can be created. If you want to add data, do it in a data object"
-          );
-        }
       }
     } else {
       throw new Error(

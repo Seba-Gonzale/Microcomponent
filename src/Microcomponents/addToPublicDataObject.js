@@ -25,7 +25,6 @@ function addToPublicDataObject(
         value: newData,
         enumerable: true,
       });
-      // g_dataList[_key] = newData;
     } else {
       g_publicDataList[_key] = {};
       createProperty_v(g_publicDataList[_key], g_dataList[_key]);
