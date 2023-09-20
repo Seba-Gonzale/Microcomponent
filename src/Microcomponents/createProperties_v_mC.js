@@ -16,7 +16,7 @@ function Microcomponent({ _key, g_dataList, g_mCRenderList }) {
 
 function setMicrocomponents(_key, g_dataList, g_mCRenderList, _value) {
   if (g_dataList[_key] !== _value) {
-    const aux = {};
+    const aux = undefined;
     g_dataList[_key] = _value;
     if (g_mCRenderList[_key] !== undefined) {
       setTimeout(() => [...g_mCRenderList[_key]].forEach((fx) => fx(aux)), 0);
