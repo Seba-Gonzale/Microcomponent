@@ -9,7 +9,7 @@ function addToMicrocomponentRender(_key, g_mCRenderList, _functionSet) {
 }
 
 function Microcomponent({ _key, g_dataList, g_mCRenderList }) {
-  const [value, functionSet] = useState(g_dataList[_key]);
+  const [, functionSet] = useState(g_dataList[_key]);
   addToMicrocomponentRender(_key, g_mCRenderList, functionSet);
   return <>{g_dataList[_key]}</>;
 }

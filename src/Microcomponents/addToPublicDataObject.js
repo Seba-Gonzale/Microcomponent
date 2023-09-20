@@ -1,4 +1,4 @@
-import uMicroC, { NEW, _RECURSION_ } from "./Microcomponents";
+import uMicroC, { NEW, _RECURSION_ } from "./uMicroC";
 import createProperties_v_mC from "./createProperties_v_mC";
 import createProperty_v from "./createProperty_v";
 

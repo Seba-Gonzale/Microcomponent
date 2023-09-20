@@ -1,6 +1,6 @@
-function renderValues(_indexs, _dataList, g_cRenderList) {
-  if (typeof _indexs[0] === "string" || typeof _indexs[0] === "number") {
-    const validData = _indexs.filter(
+function renderValues(_indices, _dataList, g_cRenderList) {
+  if (typeof _indices[0] === "string" || typeof _indices[0] === "number") {
+    const validData = _indices.filter(
       (value) =>
         (typeof value === "string" || typeof value === "number") &&
         value in g_cRenderList

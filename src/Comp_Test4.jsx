@@ -1,5 +1,5 @@
 import { uM_test3 } from "./Comp_Test3";
-import uMicroC from "./Microcomponents/Microcomponents";
+import uMicroC from "./Microcomponents/uMicroC";
 
 export default function CompTest4() {
   const test2 = uMicroC(0, 3);

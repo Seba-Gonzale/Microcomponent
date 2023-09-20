@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function CreateStatusClip() {
-  const [v, stateFunction] = useState();
+  const [, stateFunction] = useState();
   return stateFunction;
 }
 function subscriptionsOnly(_data, g_cRenderList, _dataList) {

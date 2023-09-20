@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import uMicroC, { NEW } from "./Microcomponents/Microcomponents";
+import uMicroC, { NEW } from "./Microcomponents/uMicroC.js";
 
 const collaborators = [
   {
