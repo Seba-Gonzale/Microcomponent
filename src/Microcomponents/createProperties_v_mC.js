@@ -1,4 +1,4 @@
-import { useState } from "react";
+import CreateStatusClip from "./CreateStatusClip";
 
 function addToMicrocomponentRender(_key, g_mCRenderList, _functionSet) {
   if (_key in g_mCRenderList) {
@@ -9,14 +9,13 @@ function addToMicrocomponentRender(_key, g_mCRenderList, _functionSet) {
 }
 
 function Microcomponent({ _key, g_dataList, g_mCRenderList }) {
-  const [, functionSet] = useState(g_dataList[_key]);
-  addToMicrocomponentRender(_key, g_mCRenderList, functionSet);
+  addToMicrocomponentRender(_key, g_mCRenderList, CreateStatusClip());
   return <>{g_dataList[_key]}</>;
 }
 
 function setMicrocomponents(_key, g_dataList, g_mCRenderList, _value) {
   if (g_dataList[_key] !== _value) {
-    const aux = undefined;
+    const aux = {};
     g_dataList[_key] = _value;
     if (g_mCRenderList[_key] !== undefined) {
       setTimeout(() => [...g_mCRenderList[_key]].forEach((fx) => fx(aux)), 0);

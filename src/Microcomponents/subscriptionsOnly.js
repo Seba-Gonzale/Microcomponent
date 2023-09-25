@@ -1,10 +1,5 @@
-import { useState } from "react";
-function CreateStatusClip() {
-  try {
-    const [, stateFunction] = useState();
-    return stateFunction;
-  } catch (error) {}
-}
+import CreateStatusClip from "./CreateStatusClip.js";
+
 function subscriptionsOnly(data, g_cRenderList, g_dataList) {
   if (typeof data[0] === "string" || typeof data[0] === "number") {
     //
