@@ -5,11 +5,13 @@ import createProperty_v from "./createProperty_v";
 import subscriptionsOnly from "./subscriptionsOnly";
 import renderValues from "./renderValues";
 import checkIntegrity from "./checkIntegrity";
+// import storageAvailable from "./storageAvailable";
 
 export const NEW = "N*-_#$E*-_%W1+}";
 export const _RECURSION_ = "-*/g_dataList-*/";
 
 function createListOfMicrocomponents() {
+  // console.log(storageAvailable("sessionStorage"));
   let g_dataList;
   let g_publicDataList;
   // * Es obligatorio inicializar como objeto

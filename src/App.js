@@ -7,6 +7,12 @@ import CompTest4 from "./Comp_Test4";
 import CompTest2 from "./Comp_Test2";
 const uGlobal_users = uGlobal("new");
 
+if (sessionStorage.getItem("p")) console.log(sessionStorage.getItem("p"));
+else {
+  sessionStorage.setItem("p", JSON.stringify({ hola: "universo" }));
+  console.log(sessionStorage.getItem("p"));
+}
+
 const collaborators = [
   {
     id: uuidv4(),
@@ -56,6 +62,7 @@ const { _get_ } = uGlobal_users({ ...collaborators });
 // });
 
 function App() {
+  console.log(window.location.host);
   return (
     <div className="App">
       {Object.keys(_get_).map((key) => (
